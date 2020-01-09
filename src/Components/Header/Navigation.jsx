@@ -7,6 +7,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import SearchBar from "./Autocomplete";
+import MenuListComposition from "./Menu"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -61,31 +62,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Navigation() {
+export default function Navigation(props) {
   const classes = useStyles();
-
+  const { data, temporalData, filterTemporalData} = props;
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
+          <MenuListComposition/>
           <Typography className={classes.title} variant="h6" noWrap>
             Kmbios_VE
           </Typography>
           <div className={classes.search}>
-            <SearchBar placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}/>
+            <SearchBar data={data} temporalData={temporalData} filterTemporalData={filterTemporalData}/>
           </div>
         </Toolbar>
       </AppBar>

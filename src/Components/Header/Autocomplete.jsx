@@ -3,24 +3,24 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-export default function SearchBar() {
+export default function SearchBar(props) {
+  const { data, filterTemporalData, temporalData} = props;
+  function filterResult(event, data) {
+    filterTemporalData(data.filter((el) => {
+      return el.personal_id.startsWith(event.target.value)
+          }))   
+  }  
   return (
     <Autocomplete
       id="combo-box-demo"
-      options={top100Films}
+      options={temporalData}
       getOptionLabel={option => option.personal_id}
-      style={{ width: 300 }}
+      style={{ width: 200 }}
       renderInput={params => (
-        <TextField {...params} label="Cedula de identidad" variant="outlined" fullWidth />
-      )}
+        <TextField {...params} label="Buscar por cedula" variant="outlined"
+                               fullWidth onChange={(event)=> filterResult(event, data)}
+        />
+        )}
     />
   );
 }
-
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-const top100Films = [
-  {account_number: 142134213421, name: 'Carlos', lastName: 'Fabian', bank: 'Banesco', personal_id: 23654217, telephone_number: 12313123, mobile_pay: 12312321},
-  {account_number: 142134213421, name: 'Carlos', lastName: 'Fabian', bank: 'Banesco', personal_id: 11941233, telephone_number: 12313123, mobile_pay: 12312321},
-  {account_number: 142134213421, name: 'Carlos', lastName: 'Fabian', bank: 'Banesco', personal_id: 20372123, telephone_number: 12313123, mobile_pay: 12312321},
-  {account_number: 142134213421, name: 'Carlos', lastName: 'Fabian', bank: 'Banesco', personal_id: 4876123, telephone_number: 12313123, mobile_pay: 12312321}
-];

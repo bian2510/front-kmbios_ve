@@ -12,21 +12,12 @@ const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
-});
+})
 
-function createData(account_number, name, lastName, bank, personal_id, telephone_number, mobile_pay) {
-  return { account_number, name, lastName, bank, personal_id, telephone_number, mobile_pay };
-}
-
-const rows = [
-  createData(142134213421, 'Carlos', 'Fabian', 'Banesco', 12313123, 12313123, 12312321),
-  createData(142134213421, 'Pedro', 'Jesus', 'Mercantil', 12313123, 12313123, 123123213),
-  createData(142134213421, 'Genesis', 'Lismar', 'Provincial', 12313123, 12313123, 123123123),
-  createData(142134213421, 'Gleisy', 'Carolina', 'Mercantil', 12313123, 12313123, 12312312)
-];
-
-export default function AccountTable() {
+export default function AccountTable(props) {
+  const { temporalData} = props;
   const classes = useStyles();
+  console.log(temporalData)
 
   return (
     <TableContainer component={Paper}>
@@ -43,17 +34,17 @@ export default function AccountTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map(row => (
-            <TableRow key={row.name}>
+          {temporalData.map(beneficiary => (
+            <TableRow>
               <TableCell component="th" scope="row">
-                {row.account_number}
+                {beneficiary.account_number}
               </TableCell>
-              <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right">{row.lastName}</TableCell>
-              <TableCell align="right">{row.bank}</TableCell>
-              <TableCell align="right">{row.personal_id}</TableCell>
-              <TableCell align="right">{row.telephone_number}</TableCell>
-              <TableCell align="right">{row.mobile_pay}</TableCell>
+              <TableCell align="right">{beneficiary.name}</TableCell>
+              <TableCell align="right">{beneficiary.lastName}</TableCell>
+              <TableCell align="right">{beneficiary.bank}</TableCell>
+              <TableCell align="right">{beneficiary.personal_id}</TableCell>
+              <TableCell align="right">{beneficiary.telephone_number}</TableCell>
+              <TableCell align="right">{beneficiary.mobile_pay}</TableCell>
             </TableRow>
           ))}
         </TableBody>
