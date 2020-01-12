@@ -17,7 +17,6 @@ const useStyles = makeStyles({
 export default function AccountTable(props) {
   const { temporalData} = props;
   const classes = useStyles();
-  console.log(temporalData)
 
   return (
     <TableContainer component={Paper}>
@@ -35,7 +34,7 @@ export default function AccountTable(props) {
         </TableHead>
         <TableBody>
           {temporalData.map(beneficiary => (
-            <TableRow>
+            <TableRow key={beneficiary.id}>
               <TableCell component="th" scope="row">
                 {beneficiary.account_number}
               </TableCell>
