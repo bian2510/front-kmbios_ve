@@ -15,7 +15,7 @@ const useStyles = makeStyles({
 })
 
 export default function AccountTable(props) {
-  const { temporalData} = props;
+  const { temporalData } = props;
   const classes = useStyles();
 
   return (
