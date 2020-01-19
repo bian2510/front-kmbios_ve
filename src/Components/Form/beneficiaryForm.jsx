@@ -58,7 +58,7 @@ export default function BeneficiaryForm(props) {
       }) => (
 <form onSubmit={handleSubmit}>
       <div>
-        <TextField helperText={''} error={true} label="Numero de cuenta" name="account_number" variant="outlined" onChange={handleChange}
+        <TextField helperText={''} error={false} label="Numero de cuenta" name="account_number" variant="outlined" onChange={handleChange}
             onBlur={handleBlur}
             value={values.account_number}/>
       </div>
