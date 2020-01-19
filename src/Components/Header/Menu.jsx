@@ -17,7 +17,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function MenuListComposition() {
+export default function MenuListComposition(props) {
+  const { user, setUser, signOut } = props
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -30,7 +31,7 @@ export default function MenuListComposition() {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-
+    signOut(user, setUser)
     setOpen(false);
   };
 
@@ -69,13 +70,11 @@ export default function MenuListComposition() {
               style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
             >
               <Paper>
-                <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={handleClose}>Cuentas</MenuItem>
                     <MenuItem onClick={handleClose}>Agregar cuenta</MenuItem>
-                    <MenuItem onClick={handleClose}>Cerrar sesion</MenuItem>
+                    <MenuItem onClick={handleClose} type="submit">Cerrar sesion</MenuItem>
                   </MenuList>
-                </ClickAwayListener>
               </Paper>
             </Grow>
           )}

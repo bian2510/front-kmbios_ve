@@ -64,12 +64,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function Navigation(props) {
   const classes = useStyles();
-  const { data, temporalData, filterTemporalData} = props;
+  const { data, temporalData, filterTemporalData, user, signOut, setUser} = props;
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <MenuListComposition/>
+          <MenuListComposition user={user} signOut={signOut} setUser={setUser}/>
           <Typography className={classes.title} variant="h6" noWrap>
             Kmbios_VE
           </Typography>
