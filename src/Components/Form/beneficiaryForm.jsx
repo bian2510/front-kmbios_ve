@@ -6,6 +6,8 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import { Formik } from 'formik';
+import { createBeneficiary } from '../../Services/Calls'
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -18,7 +20,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function BeneficiaryForm() {
+export default function BeneficiaryForm(props) {
+  const { setUser, user } = props;
   const classes = useStyles();
   const [bank, setBank] = React.useState('');
 
@@ -28,21 +31,46 @@ export default function BeneficiaryForm() {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  const handleChange = event => {
+  const handleChangeBank = event => {
     setBank(event.target.value);
   };
-
   return (
     <div>
-      <form>
+      <Formik
+      initialValues={{ account_number: '', name: '', last_name: '', bank: bank,
+      personal_id: '',  telephone_number: '', mobile_pay: '' 
+      }}
+      onSubmit={(values, { setSubmitting }) => {
+        setTimeout(() => {
+          console.log(values);
+          createBeneficiary(user, setUser, values)
+          setSubmitting(false);
+        }, 400);
+      }}
+    >
+      {({
+        values,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        isSubmitting,
+        /* and other goodies */
+      }) => (
+<form onSubmit={handleSubmit}>
       <div>
-        <TextField label="Numero de cuenta" variant="outlined" />
+        <TextField helperText={''} error={true} label="Numero de cuenta" name="account_number" variant="outlined" onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.account_number}/>
       </div>
       <div>
-        <TextField label="Nombre" variant="outlined" />
+        <TextField label="Nombre" name="name" variant="outlined" onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.name}/>
       </div>
       <div>
-        <TextField label="Apellido" variant="outlined" />
+        <TextField label="Apellido" name="last_name" variant="outlined" onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.last_name}/>
       </div>
       <FormControl variant="outlined" className={classes.formControl}>
         <InputLabel ref={inputLabel} id="demo-simple-select-outlined-label">
@@ -52,7 +80,7 @@ export default function BeneficiaryForm() {
           labelId="demo-simple-select-outlined-label"
           id="demo-simple-select-outlined"
           value={bank}
-          onChange={handleChange}
+          onChange={handleChangeBank}
           labelWidth={labelWidth}
         >
           <MenuItem value="">
@@ -63,18 +91,26 @@ export default function BeneficiaryForm() {
         </Select>
       </FormControl>
       <div>
-        <TextField label="Cedula" variant="outlined" />
+        <TextField label="Cedula" name="personal_id" variant="outlined" onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.personal_id}/>
       </div>
       <div>
-        <TextField label="Numero de telefono" variant="outlined" />
+        <TextField label="Numero de telefono" name="telephone_number" variant="outlined" onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.telephone_number}/>
       </div>
       <div>
-        <TextField label="Pago Movil" variant="outlined" />
+        <TextField label="Pago Movil" name="mobile_pay" variant="outlined" onChange={handleChange}
+            onBlur={handleBlur}
+            value={values.mobile_pay}/>
       </div>
-      <Button variant="contained" type="submit" color="primary">
+      <Button variant="contained" type="submit" color="primary" disabled={isSubmitting}>
         Crear
       </Button>
       </form>
+      )}
+    </Formik>
     </div>
   );
 }
