@@ -39,7 +39,7 @@ export default function AccountTable(props) {
                 {beneficiary.account_number}
               </TableCell>
               <TableCell align="right">{beneficiary.name}</TableCell>
-              <TableCell align="right">{beneficiary.lastName}</TableCell>
+              <TableCell align="right">{beneficiary.last_name}</TableCell>
               <TableCell align="right">{beneficiary.bank}</TableCell>
               <TableCell align="right">{beneficiary.personal_id}</TableCell>
               <TableCell align="right">{beneficiary.telephone_number}</TableCell>
