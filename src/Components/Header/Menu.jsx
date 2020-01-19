@@ -7,6 +7,7 @@ import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
+import { signOut } from '../../Services/Calls'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function MenuListComposition(props) {
-  const { user, setUser, signOut } = props
+  const { user, setUser } = props
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -31,8 +32,8 @@ export default function MenuListComposition(props) {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-    signOut(user, setUser)
     setOpen(false);
+    signOut(user, setUser)
   };
 
   function handleListKeyDown(event) {
@@ -73,7 +74,7 @@ export default function MenuListComposition(props) {
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <MenuItem onClick={handleClose}>Cuentas</MenuItem>
                     <MenuItem onClick={handleClose}>Agregar cuenta</MenuItem>
-                    <MenuItem onClick={handleClose} type="submit">Cerrar sesion</MenuItem>
+                    <MenuItem onClick={handleClose}>Cerrar sesion</MenuItem>
                   </MenuList>
               </Paper>
             </Grow>
