@@ -8,8 +8,14 @@ const setHeaders = (user) => {
   return headers
 }
 
+const makeParams = (params) => {
+  params.personal_id = parseInt(params.personal_id)
+  params.telephone_number = parseInt(params.telephone_number)
+  params.mobile_pay = parseInt(params.mobile_pay)
+  return params
+}
+
   export const beneficiaryData = async function loadData(user, setUser){
-    console.log(user)
   return await axios.get('http://localhost:3001/', { headers: user })
     .then(function (response) {
       return response
@@ -32,6 +38,19 @@ const setHeaders = (user) => {
 
   export const signOut = async function logOut(user, setUser) {
     return await axios.delete('http://localhost:3001/auth/sign_out', {headers: setHeaders(user)})
+      .then(function (response) {
+        setUser(response.headers)
+        return response
+      })
+      .catch(function (error) {
+        return error      
+      })
+  }
+
+  export const createBeneficiary = async function create(user, setUser, params) {
+    const body = makeParams(params)
+    console.log(body)
+    return await axios.post('http://localhost:3001/beneficiary', body, {headers: setHeaders(user)})
       .then(function (response) {
         setUser(response.headers)
         return response
