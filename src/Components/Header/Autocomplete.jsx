@@ -7,7 +7,7 @@ export default function SearchBar(props) {
   const { data, filterTemporalData, temporalData} = props;
   function filterResult(event, data) {
     filterTemporalData(data.filter((el) => {
-      return el.personal_id.startsWith(event.target.value)
+      return el.personal_id.toString().startsWith(event.target.value)
           }))   
   }  
   return (
