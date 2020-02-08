@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const setHeaders = (user) => {
-  let headers = {'uid': '', 'client': '', 'access-token': ''}
-  headers.uid = user.uid 
-  headers.client = user.client
-  headers['access-token'] = user['access-token']
-  return headers
+  localStorage.setItem('uid', user.uid) 
+  localStorage.setItem('client', user.client)
+  localStorage.setItem('access-token', user['access-token'])
+  return {'uid': localStorage.uid, 'client': localStorage.client,
+          'access-token': localStorage['access-token'] }
 }
 
 const makeParams = (params) => {
@@ -15,9 +15,10 @@ const makeParams = (params) => {
   return params
 }
 
-  export const beneficiaryData = async function loadData(user, setUser){
-  return await axios.get('http://localhost:3001/', { headers: user })
+  export const beneficiaryData = async function loadData(user){
+  return await axios.get('http://localhost:3001/', { headers: localStorage})
     .then(function (response) {
+      setHeaders(response.headers)
       return response
     })
     .catch(function (error) {
@@ -28,7 +29,8 @@ const makeParams = (params) => {
   export const signIn = async function logIn(body, setUser) {
     return await axios.post('http://localhost:3001/auth/sign_in', body)
       .then(function (response) {
-        setUser(response.headers)
+        setHeaders(response.headers)
+        setUser(true)
         return response
       })
       .catch(function (error) {
@@ -36,10 +38,10 @@ const makeParams = (params) => {
       })
   }
 
-  export const signOut = async function logOut(user, setUser) {
-    return await axios.delete('http://localhost:3001/auth/sign_out', {headers: setHeaders(user)})
+  export const signOut = async function logOut() {
+    return await axios.delete('http://localhost:3001/auth/sign_out', {headers: localStorage})
       .then(function (response) {
-        setUser(response.headers)
+        localStorage.clear()
         return response
       })
       .catch(function (error) {
@@ -47,12 +49,11 @@ const makeParams = (params) => {
       })
   }
 
-  export const createBeneficiary = async function create(user, setUser, params) {
+  export const createBeneficiary = async function create(params) {
     const body = makeParams(params)
-    console.log(body)
-    return await axios.post('http://localhost:3001/beneficiary', body, {headers: setHeaders(user)})
+    return await axios.post('http://localhost:3001/beneficiary', body, {headers: localStorage})
       .then(function (response) {
-        setUser(response.headers)
+        setHeaders(response.headers)
         return response
       })
       .catch(function (error) {
