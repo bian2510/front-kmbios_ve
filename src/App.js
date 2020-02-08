@@ -8,12 +8,13 @@ import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from "rea
 import { beneficiaryData } from './Services/Calls'
 
 function App() {
-  const [user, setUser] = useState({})
+  const session = localStorage.length != 0 ? true : false
+  const [user, setUser] = useState(session)
   const [data, setData] = useState([]);
   const [temporalData, filterTemporalData] = useState(data)
   useEffect(() => {
     const fetchData = async () => {
-      const { data: responseData } = await beneficiaryData(user, setUser);
+      const { data: responseData } = await beneficiaryData(localStorage);
       setData(responseData);
       setTimeout(() => { return; }, 500);
     };
@@ -22,17 +23,27 @@ function App() {
   return (
 
     <div className="App">
+      <Router>
         <Navigation data={data} 
                     temporalData={temporalData}
                     filterTemporalData={filterTemporalData}
                     user={user}
                     setUser={setUser}
         />
-        <AccountTable temporalData={temporalData}/>
-        <FormSignIn setUser={setUser}/>                
-        <FormCreateBeneficiary setUser={setUser} 
-                               user={user}
-        />
+        <Switch>
+          <Route exact path="/">
+            {user == false ? <FormSignIn setUser={setUser}/> : <AccountTable temporalData={temporalData}/>}
+          </Route>
+          <Route path="/sign_in">
+            {user == false ? <FormSignIn setUser={setUser}/> : <AccountTable temporalData={temporalData}/>}
+          </Route>
+          <Route path="/crear_beneficiario">
+            { user == false ? <FormSignIn setUser={setUser}/> : <FormCreateBeneficiary setUser={setUser} 
+                                  user={user}
+            />}
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
