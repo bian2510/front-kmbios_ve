@@ -8,6 +8,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import { makeStyles } from '@material-ui/core/styles';
 import { signOut } from '../../Services/Calls'
+import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from "react-router-dom";
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,7 +35,7 @@ export default function MenuListComposition(props) {
       return;
     }
     setOpen(false);
-    signOut(user, setUser)
+    //signOut(user, setUser)
   };
 
   function handleListKeyDown(event) {
@@ -72,8 +74,12 @@ export default function MenuListComposition(props) {
             >
               <Paper>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>Cuentas</MenuItem>
-                    <MenuItem onClick={handleClose}>Agregar cuenta</MenuItem>
+                    <Link to="/">
+                      <MenuItem onClick={handleClose}>Cuentas</MenuItem>
+                    </Link>
+                    <Link to="/crear_beneficiario">
+                      <MenuItem onClick={handleClose}>Agregar cuenta</MenuItem>
+                    </Link>
                     <MenuItem onClick={handleClose}>Cerrar sesion</MenuItem>
                   </MenuList>
               </Paper>
