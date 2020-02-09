@@ -1,11 +1,15 @@
 import axios from 'axios';
 
 const setHeaders = (user) => {
-  localStorage.setItem('uid', user.uid) 
-  localStorage.setItem('client', user.client)
-  localStorage.setItem('access-token', user['access-token'])
-  return {'uid': localStorage.uid, 'client': localStorage.client,
-          'access-token': localStorage['access-token'] }
+  if (user['access-token'] != "") {
+    localStorage.setItem('user', JSON.stringify(user))
+  } else { return
+
+  }
+}
+
+const getHeaders = () => {
+  return  JSON.parse(localStorage.getItem('user'))
 }
 
 const makeParams = (params) => {
@@ -15,13 +19,14 @@ const makeParams = (params) => {
   return params
 }
 
-  export const beneficiaryData = async function loadData(user){
-  return await axios.get('http://localhost:3001/', { headers: localStorage})
+  export const beneficiaryData = async function loadData(setUser){
+  return await axios.get('http://localhost:3001/', { headers: getHeaders()})
     .then(function (response) {
       setHeaders(response.headers)
       return response
     })
     .catch(function (error) {
+      setUser(false)
       return error;
     })
   }
@@ -34,12 +39,13 @@ const makeParams = (params) => {
         return response
       })
       .catch(function (error) {
+        setUser(false)
         return error      
       })
   }
 
   export const signOut = async function logOut() {
-    return await axios.delete('http://localhost:3001/auth/sign_out', {headers: localStorage})
+    return await axios.delete('http://localhost:3001/auth/sign_out', {headers: getHeaders()})
       .then(function (response) {
         localStorage.clear()
         return response
@@ -49,14 +55,15 @@ const makeParams = (params) => {
       })
   }
 
-  export const createBeneficiary = async function create(params) {
+  export const createBeneficiary = async function create(params, setUser) {
     const body = makeParams(params)
-    return await axios.post('http://localhost:3001/beneficiary', body, {headers: localStorage})
+    return await axios.post('http://localhost:3001/beneficiary', body, {headers: getHeaders()})
       .then(function (response) {
         setHeaders(response.headers)
         return response
       })
       .catch(function (error) {
+        setUser(false)
         return error      
       })
   }
