@@ -10,6 +10,7 @@ import { Formik } from 'formik';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import { createBeneficiary } from '../../Services/Calls'
 import * as Yup from 'yup';
+import { withRouter } from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -23,9 +24,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function BeneficiaryForm(props) {
-  const { setUser, user } = props;
+  const { setUser, filterTemporalData } = props;
   const classes = useStyles();
-  const [bank, setBank] = React.useState('');
 
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -33,38 +33,33 @@ export default function BeneficiaryForm(props) {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  const handleChange = event => {
-    setBank(event.target.value);
-  };
   const SignupSchema = Yup.object().shape({
     account_number: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
+      .min(20, 'Numero de cuenta invalido')
+      .max(20, 'Numero de cuenta invalido')
+      .required('Requerido'),
     name: Yup.string()
       .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
+      .max(15, 'Too Long!')
+      .required('Requerido'),
     last_name: Yup.string()
       .min(2, 'Too Short!')
       .max(50, 'Too Long!')
-      .required('Required'),
+      .required('Requerido'),
     bank: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
+      .required('Requerido'),
     personal_id: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
+      .min(7, 'Cedula invalida')
+      .max(10, 'Cedula invalida')
+      .required('Requerido'),
     telephone_number: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
+      .min(12, 'Too Short!')
+      .max(13, 'Too Long!')
+      .required('Requerido'),
     mobile_pay: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Required'),
+    //  .min(2, 'Too Short!')
+      .max(10, 'Numero invalido')
+      .required('Requerido'),
   });
   return (
     <div>
@@ -75,7 +70,7 @@ export default function BeneficiaryForm(props) {
       validationSchema={SignupSchema}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          console.log(values);
+          createBeneficiary(values, setUser, filterTemporalData)
           setSubmitting(false);
         }, 400);
       }}
