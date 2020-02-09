@@ -19,7 +19,6 @@ function App() {
     };
     fetchData();
   }, [user]);
-  console.log(user)
   return (
 
     <div className="App">
