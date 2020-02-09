@@ -16,14 +16,16 @@ const makeParams = (params) => {
   params.personal_id = parseInt(params.personal_id)
   params.telephone_number = parseInt(params.telephone_number)
   params.mobile_pay = parseInt(params.mobile_pay)
+  params.bank = params.bank.toLowerCase()
   return params
 }
 
-  export const beneficiaryData = async function loadData(setUser){
+  export const beneficiaryData = async function loadData(setUser, filterTemporalData){
   return await axios.get('http://localhost:3001/', { headers: getHeaders()})
     .then(function (response) {
       setHeaders(response.headers)
-      return response
+      filterTemporalData(response.data)
+      return response.data
     })
     .catch(function (error) {
       setUser(false)
@@ -55,14 +57,15 @@ const makeParams = (params) => {
       })
   }
 
-  export const createBeneficiary = async function create(params, setUser) {
+  export const createBeneficiary = async function create(params, setUser, filterTemporalData) {
     const body = makeParams(params)
     return await axios.post('http://localhost:3001/beneficiary', body, {headers: getHeaders()})
       .then(function (response) {
         setHeaders(response.headers)
+        beneficiaryData(setUser, filterTemporalData)
         return response
       })
-      .catch(function (error) {
+      .catch(function (response, error) {
         setUser(false)
         return error      
       })
