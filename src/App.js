@@ -4,7 +4,7 @@ import './App.css';
 import AccountTable from './Components/Table/Table';
 import FormSignIn from './Components/Form/SignIn'
 import FormCreateBeneficiary  from './Components/Form/beneficiaryForm'
-import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, Redirect } from "react-router-dom";
 import { beneficiaryData } from './Services/Calls'
 
 function App() {
@@ -14,12 +14,12 @@ function App() {
   const [temporalData, filterTemporalData] = useState(data)
   useEffect(() => {
     const fetchData = async () => {
-      const { data: responseData } = await beneficiaryData(localStorage);
+      const { data: responseData } = await beneficiaryData(setUser);
       setData(responseData);
-      setTimeout(() => { return; }, 500);
     };
     fetchData();
   }, [user]);
+  console.log(user)
   return (
 
     <div className="App">
@@ -32,13 +32,13 @@ function App() {
         />
         <Switch>
           <Route exact path="/">
-            {user == false ? <FormSignIn setUser={setUser}/> : <AccountTable temporalData={temporalData}/>}
+            {user == false ? <Redirect to="/sign_in"/> : <AccountTable temporalData={temporalData}/>}
           </Route>
           <Route path="/sign_in">
-            {user == false ? <FormSignIn setUser={setUser}/> : <AccountTable temporalData={temporalData}/>}
+            {user == false ? <FormSignIn setUser={setUser}/> : <Redirect to="/"/>}
           </Route>
           <Route path="/crear_beneficiario">
-            { user == false ? <FormSignIn setUser={setUser}/> : <FormCreateBeneficiary setUser={setUser} 
+            { user == false ? <Redirect to="/sign_in"/> : <FormCreateBeneficiary setUser={setUser} 
                                   user={user}
             />}
           </Route>
