@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const setHeaders = (user) => {
-  if (user['access-token'] != "") {
+  if (user['access-token'] !== "") {
     localStorage.setItem('user', JSON.stringify(user))
   } else { return
 

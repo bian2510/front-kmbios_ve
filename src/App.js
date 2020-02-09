@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch, Redirect }
 import { beneficiaryData } from './Services/Calls'
 
 function App() {
-  const session = localStorage.length != 0 ? true : false
+  const session = localStorage.length !== 0 ? true : false
   const [user, setUser] = useState(session)
   const [data, setData] = useState([]);
   const [temporalData, filterTemporalData] = useState(data)
@@ -31,13 +31,13 @@ function App() {
         />
         <Switch>
           <Route exact path="/">
-            {user == false ? <Redirect to="/sign_in"/> : <AccountTable temporalData={temporalData}/>}
+            {user === false ? <Redirect to="/sign_in"/> : <AccountTable temporalData={temporalData}/>}
           </Route>
           <Route path="/sign_in">
-            {user == false ? <FormSignIn setUser={setUser}/> : <Redirect to="/"/>}
+            {user === false ? <FormSignIn setUser={setUser}/> : <Redirect to="/"/>}
           </Route>
           <Route path="/crear_beneficiario">
-            { user == false ? <Redirect to="/sign_in"/> : <FormCreateBeneficiary setUser={setUser} 
+            { user === false ? <Redirect to="/sign_in"/> : <FormCreateBeneficiary setUser={setUser} 
                                   user={user}
             />}
           </Route>
