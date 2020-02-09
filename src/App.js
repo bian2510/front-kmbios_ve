@@ -14,8 +14,8 @@ function App() {
   const [temporalData, filterTemporalData] = useState(data)
   useEffect(() => {
     const fetchData = async () => {
-      const { data: responseData } = await beneficiaryData(setUser);
-      setData(responseData);
+      const responseData = await beneficiaryData(setUser, filterTemporalData);
+      setData(responseData)
     };
     fetchData();
   }, [user]);
@@ -37,7 +37,7 @@ function App() {
             {user === false ? <FormSignIn setUser={setUser}/> : <Redirect to="/"/>}
           </Route>
           <Route path="/crear_beneficiario">
-            { user === false ? <Redirect to="/sign_in"/> : <FormCreateBeneficiary setUser={setUser} 
+            { user === false ? <Redirect to="/sign_in"/> : <FormCreateBeneficiary setUser={setUser} filterTemporalData={filterTemporalData} 
                                   user={user}
             />}
           </Route>
