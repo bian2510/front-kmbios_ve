@@ -23,8 +23,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function BeneficiaryForm(props) {
-  const { setUser, filterTemporalData } = props;
+const BeneficiaryForm = (props) => {
+  const { setUser, filterTemporalData, history } = props;
   const classes = useStyles();
 
   const inputLabel = React.useRef(null);
@@ -39,12 +39,12 @@ export default function BeneficiaryForm(props) {
       .max(20, 'Numero de cuenta invalido')
       .required('Requerido'),
     name: Yup.string()
-      .min(2, 'Too Short!')
-      .max(15, 'Too Long!')
+      .min(2, 'Nombre invalido')
+      .max(15, 'Nombre invalido')
       .required('Requerido'),
     last_name: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
+      .min(2, 'Apellido invalido')
+      .max(15, 'Apellido invalido')
       .required('Requerido'),
     bank: Yup.string()
       .required('Requerido'),
@@ -53,13 +53,12 @@ export default function BeneficiaryForm(props) {
       .max(10, 'Cedula invalida')
       .required('Requerido'),
     telephone_number: Yup.string()
-      .min(12, 'Too Short!')
-      .max(13, 'Too Long!')
+      .min(12, 'Numero de telefono invalido')
+      .max(13, 'Numero de telefono invalido')
       .required('Requerido'),
     mobile_pay: Yup.string()
     //  .min(2, 'Too Short!')
       .max(10, 'Numero invalido')
-      .required('Requerido'),
   });
   return (
     <div>
@@ -72,6 +71,7 @@ export default function BeneficiaryForm(props) {
         setTimeout(() => {
           createBeneficiary(values, setUser, filterTemporalData)
           setSubmitting(false);
+          history.push("/")
         }, 400);
       }}
     >
@@ -152,3 +152,5 @@ export default function BeneficiaryForm(props) {
     </div>
   );
 }
+
+export default withRouter(BeneficiaryForm);
