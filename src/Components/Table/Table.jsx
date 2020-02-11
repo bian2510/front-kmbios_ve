@@ -7,6 +7,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from "react-router-dom";
 
 const useStyles = makeStyles({
   table: {
@@ -23,7 +26,8 @@ export default function AccountTable(props) {
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Numero de cuenta</TableCell>
+            <TableCell>Editar/Borrar</TableCell>
+            <TableCell align="right">Numero de cuenta</TableCell>
             <TableCell align="right">Nombre</TableCell>
             <TableCell align="right">Apellido</TableCell>
             <TableCell align="right">Banco</TableCell>
@@ -35,9 +39,8 @@ export default function AccountTable(props) {
         <TableBody>
           {temporalData.map(beneficiary => (
             <TableRow key={beneficiary.id}>
-              <TableCell component="th" scope="row">
-                {beneficiary.account_number}
-              </TableCell>
+              <TableCell component="th" scope="row"><Link><EditIcon/></Link><Link><DeleteIcon/></Link></TableCell>
+              <TableCell align="right">{beneficiary.account_number}</TableCell>
               <TableCell align="right">{beneficiary.name}</TableCell>
               <TableCell align="right">{beneficiary.last_name}</TableCell>
               <TableCell align="right">{beneficiary.bank}</TableCell>
