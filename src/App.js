@@ -31,7 +31,7 @@ function App() {
         />
         <Switch>
           <Route exact path="/">
-            {user === false ? <Redirect to="/sign_in"/> : <AccountTable temporalData={temporalData}/>}
+            {user === false ? <Redirect to="/sign_in"/> : <AccountTable temporalData={temporalData} setUser={setUser} filterTemporalData={filterTemporalData}/>}
           </Route>
           <Route path="/sign_in">
             {user === false ? <FormSignIn setUser={setUser}/> : <Redirect to="/"/>}
