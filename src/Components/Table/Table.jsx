@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from "react-router-dom";
+import { deleteBeneficiary } from '../../Services/Calls'
 
 const useStyles = makeStyles({
   table: {
@@ -18,9 +19,9 @@ const useStyles = makeStyles({
 })
 
 export default function AccountTable(props) {
-  const { temporalData } = props;
+  const { temporalData, setUser, filterTemporalData } = props;
   const classes = useStyles();
-
+  const deleteRegister = (beneficiary_id) => {deleteBeneficiary(beneficiary_id, setUser, filterTemporalData)}
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">
@@ -39,7 +40,10 @@ export default function AccountTable(props) {
         <TableBody>
           {temporalData.map(beneficiary => (
             <TableRow key={beneficiary.id}>
-              <TableCell component="th" scope="row"><Link><EditIcon/></Link><Link><DeleteIcon/></Link></TableCell>
+              <TableCell component="th" scope="row">
+                <Link><EditIcon/></Link>
+                <Link><DeleteIcon onClick={() => {deleteRegister(beneficiary.id)}}/></Link>
+              </TableCell>
               <TableCell align="right">{beneficiary.account_number}</TableCell>
               <TableCell align="right">{beneficiary.name}</TableCell>
               <TableCell align="right">{beneficiary.last_name}</TableCell>
