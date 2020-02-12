@@ -59,7 +59,20 @@ const makeParams = (params) => {
 
   export const createBeneficiary = async function create(params, setUser, filterTemporalData) {
     const body = makeParams(params)
-    return await axios.post('http://localhost:3001/beneficiary', body, {headers: getHeaders()})
+    return await axios.post('http://localhost:3001/beneficiaries', body, {headers: getHeaders()})
+      .then(function (response) {
+        setHeaders(response.headers)
+        beneficiaryData(setUser, filterTemporalData)
+        return response
+      })
+      .catch(function (response, error) {
+        setUser(false)
+        return error      
+      })
+  }
+
+  export const deleteBeneficiary = async function (beneficiary_id, setUser, filterTemporalData) {
+    return await axios.delete(`http://localhost:3001/beneficiaries/${beneficiary_id}`, {headers: getHeaders()})
       .then(function (response) {
         setHeaders(response.headers)
         beneficiaryData(setUser, filterTemporalData)
