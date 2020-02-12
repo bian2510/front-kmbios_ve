@@ -6,6 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
+import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 import { signOut } from '../../Services/Calls'
 import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from "react-router-dom";
@@ -64,7 +65,7 @@ export default function MenuListComposition(props) {
           aria-haspopup="true"
           onClick={handleToggle}
         >
-          Menu
+          <MenuIcon/>
         </Button>
         <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
           {({ TransitionProps, placement }) => (
