@@ -19,8 +19,11 @@ const useStyles = makeStyles({
 })
 
 export default function AccountTable(props) {
-  const { temporalData, setUser, filterTemporalData } = props;
+  const { temporalData, setUser, filterTemporalData, setBeneficiary } = props;
   const classes = useStyles();
+  const capitalize = (str) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+    }
   const deleteRegister = (beneficiary_id) => {deleteBeneficiary(beneficiary_id, setUser, filterTemporalData)}
   return (
     <TableContainer component={Paper}>
@@ -41,13 +44,13 @@ export default function AccountTable(props) {
           {temporalData.map(beneficiary => (
             <TableRow key={beneficiary.id}>
               <TableCell component="th" scope="row">
-                <Link><EditIcon/></Link>
+                <Link to="/editar_beneficiario" onClick={setBeneficiary(beneficiary)}><EditIcon/></Link>
                 <Link><DeleteIcon onClick={() => {deleteRegister(beneficiary.id)}}/></Link>
               </TableCell>
               <TableCell align="right">{beneficiary.account_number}</TableCell>
-              <TableCell align="right">{beneficiary.name}</TableCell>
-              <TableCell align="right">{beneficiary.last_name}</TableCell>
-              <TableCell align="right">{beneficiary.bank}</TableCell>
+              <TableCell align="right">{capitalize(beneficiary.name)}</TableCell>
+              <TableCell align="right">{capitalize(beneficiary.last_name)}</TableCell>
+              <TableCell align="right">{capitalize(beneficiary.bank)}</TableCell>
               <TableCell align="right">{beneficiary.personal_id}</TableCell>
               <TableCell align="right">{beneficiary.telephone_number}</TableCell>
               <TableCell align="right">{beneficiary.mobile_pay}</TableCell>
