@@ -15,7 +15,7 @@ const getHeaders = () => {
 const makeParams = (params) => {
   params.personal_id = parseInt(params.personal_id)
   params.telephone_number = parseInt(params.telephone_number)
-  params.mobile_pay = parseInt(params.mobile_pay)
+  params.mobile_pay = params.mobile_pay != "" ? parseInt(params.mobile_pay) : ""
   params.bank = params.bank.toLowerCase()
   return params
 }
@@ -25,6 +25,7 @@ const makeParams = (params) => {
     .then(function (response) {
       setHeaders(response.headers)
       filterTemporalData(response.data)
+      setUser(true)
       return response.data
     })
     .catch(function (error) {
@@ -65,9 +66,37 @@ const makeParams = (params) => {
         beneficiaryData(setUser, filterTemporalData)
         return response
       })
-      .catch(function (response, error) {
-        setUser(false)
-        return error      
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          setUser(false)
+          window.alert("Inicie sesion nuevamente")
+          return error.response
+        }
+        if (error.response.status === 422) {
+          window.alert("Numero de cuenta ya existe")
+          return error
+        }
+      })
+  }
+
+  export const updateBeneficiary = async function update(params, setUser, filterTemporalData, beneficiary_id) {
+    const body = makeParams(params)
+    return await axios.put(`http://localhost:3001/beneficiaries/${beneficiary_id}`, body, {headers: getHeaders()})
+      .then(function (response) {
+        setHeaders(response.headers)
+        beneficiaryData(setUser, filterTemporalData)
+        return response
+      })
+      .catch(function (error) {
+        if (error.response.status === 401) {
+          setUser(false)
+          window.alert("Inicie sesion nuevamente")
+          return error.response
+        }
+        if (error.response.status === 422) {
+          window.alert("Numero de cuenta ya existe")
+          return error
+        }
       })
   }
 
