@@ -10,6 +10,7 @@ import { beneficiaryData } from './Services/Calls'
 function App() {
   const session = localStorage.length !== 0 ? true : false
   const [user, setUser] = useState(session)
+  const [beneficiary, setBeneficiary] = useState(null)
   const [data, setData] = useState([]);
   const [temporalData, filterTemporalData] = useState(data)
   useEffect(() => {
@@ -31,14 +32,19 @@ function App() {
         />
         <Switch>
           <Route exact path="/">
-            {user === false ? <Redirect to="/sign_in"/> : <AccountTable temporalData={temporalData} setUser={setUser} filterTemporalData={filterTemporalData}/>}
+            {user === false ? <Redirect to="/sign_in"/> : <AccountTable setBeneficiary={setBeneficiary} temporalData={temporalData} setUser={setUser} filterTemporalData={filterTemporalData}/>}
           </Route>
           <Route path="/sign_in">
             {user === false ? <FormSignIn setUser={setUser}/> : <Redirect to="/"/>}
           </Route>
           <Route path="/crear_beneficiario">
             { user === false ? <Redirect to="/sign_in"/> : <FormCreateBeneficiary setUser={setUser} filterTemporalData={filterTemporalData} 
-                                  user={user}
+                                beneficiary={null}  user={user}
+            />}
+          </Route>
+          <Route path="/editar_beneficiario">
+            { beneficiary === null ? <Redirect to="/sign_in"/> : <FormCreateBeneficiary setUser={setUser} filterTemporalData={filterTemporalData} 
+                                beneficiary={beneficiary} user={user}
             />}
           </Route>
         </Switch>
