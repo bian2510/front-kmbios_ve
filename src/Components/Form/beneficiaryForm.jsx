@@ -8,7 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Formik } from 'formik';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import { createBeneficiary } from '../../Services/Calls'
+import { createBeneficiary, updateBeneficiary } from '../../Services/Calls'
 import * as Yup from 'yup';
 import { withRouter } from "react-router-dom";
 
@@ -24,9 +24,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const BeneficiaryForm = (props) => {
-  const { setUser, filterTemporalData, history } = props;
+  const { setUser, filterTemporalData, history, beneficiary, location } = props;
   const classes = useStyles();
-
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
@@ -58,21 +57,33 @@ const BeneficiaryForm = (props) => {
       .required('Requerido'),
     mobile_pay: Yup.string()
     //  .min(2, 'Too Short!')
+      .nullable(true)
+      .min(10, 'Numero invalido')
       .max(10, 'Numero invalido')
   });
   return (
     <div>
       <Formik
-      initialValues={{ account_number: '', name: '', last_name: '', bank: '',
-      personal_id: '',  telephone_number: '', mobile_pay: '' 
+      initialValues={{ account_number: beneficiary === null ? '' : beneficiary.account_number, 
+                       name: beneficiary === null ? '' : beneficiary.name, 
+                       last_name: beneficiary === null ? '' : beneficiary.last_name,
+                       bank: beneficiary === null ? '' : beneficiary.bank,
+                       personal_id: beneficiary === null ? '' : beneficiary.personal_id,
+                       telephone_number: beneficiary === null ? '' : beneficiary.telephone_number,
+                       mobile_pay: beneficiary === null ? '' : beneficiary.mobile_pay 
       }}
       validationSchema={SignupSchema}
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
+        if (beneficiary === null) {
           createBeneficiary(values, setUser, filterTemporalData)
           setSubmitting(false);
           history.push("/")
-        }, 400);
+        }
+        else {
+          updateBeneficiary(values, setUser, filterTemporalData, beneficiary.id)
+          setSubmitting(false);
+          history.push("/")
+        }
       }}
     >
       {({
@@ -93,7 +104,7 @@ const BeneficiaryForm = (props) => {
             value={values.account_number}/>
       </div>
       <div>
-        <TextField helperText={errors.name && touched.name && errors.name} 
+        <TextField helperText={errors.name && touched.name && errors.name}
             error={errors.name && touched.name && errors.name !== null}
             label="Nombre" name="name" variant="outlined" onChange={handleChange}
             onBlur={handleBlur}
@@ -144,7 +155,7 @@ const BeneficiaryForm = (props) => {
             value={values.mobile_pay}/>
       </div>
       <Button variant="contained" type="submit" color="primary" disabled={isSubmitting}>
-        Crear
+        {beneficiary === null ? "CREAR" : "EDITAR"}
       </Button>
       </form>
       )}
