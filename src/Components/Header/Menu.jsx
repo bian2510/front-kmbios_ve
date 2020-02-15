@@ -74,6 +74,7 @@ export default function MenuListComposition(props) {
               style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
             >
               <Paper>
+                <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                     <Link to="/">
                       <MenuItem onClick={handleClose}>Cuentas</MenuItem>
@@ -83,6 +84,7 @@ export default function MenuListComposition(props) {
                     </Link>
                     <MenuItem onClick={handleClose}>Cerrar sesion</MenuItem>
                   </MenuList>
+                </ClickAwayListener>
               </Paper>
             </Grow>
           )}
