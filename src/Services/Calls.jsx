@@ -1,5 +1,4 @@
 import axios from 'axios';
-console.log(process.env.REACT_APP_API_URL)
 
 const setHeaders = (user) => {
   if (user['access-token'] !== "") {
@@ -21,11 +20,11 @@ const makeParams = (params) => {
   return params
 }
 
-  export const beneficiaryData = async function loadData(setUser, filterTemporalData){
+  export const beneficiaryData = async function loadData(setUser, setData, filterTemporalData){
   return await axios.get(`${process.env.REACT_APP_API_URL}`, { headers: getHeaders()})
     .then(function (response) {
       setHeaders(response.headers)
-      filterTemporalData(response.data)
+      setData(response.data)
       setUser(true)
       return response.data
     })
@@ -59,12 +58,12 @@ const makeParams = (params) => {
       })
   }
 
-  export const createBeneficiary = async function create(params, setUser, filterTemporalData) {
+  export const createBeneficiary = async function create(params, setUser, setData) {
     const body = makeParams(params)
     return await axios.post(`${process.env.REACT_APP_API_URL}beneficiaries`, body, {headers: getHeaders()})
       .then(function (response) {
         setHeaders(response.headers)
-        beneficiaryData(setUser, filterTemporalData)
+        beneficiaryData(setUser, setData)
         return response
       })
       .catch(function (error) {
@@ -80,12 +79,12 @@ const makeParams = (params) => {
       })
   }
 
-  export const updateBeneficiary = async function update(params, setUser, filterTemporalData, beneficiary_id) {
+  export const updateBeneficiary = async function update(params, setUser, setData, beneficiary_id, filterTemporalData) {
     const body = makeParams(params)
     return await axios.put(`${process.env.REACT_APP_API_URL}beneficiaries/${beneficiary_id}`, body, {headers: getHeaders()})
       .then(function (response) {
         setHeaders(response.headers)
-        beneficiaryData(setUser, filterTemporalData)
+        beneficiaryData(setUser, setData, filterTemporalData)
         return response
       })
       .catch(function (error) {
@@ -101,14 +100,14 @@ const makeParams = (params) => {
       })
   }
 
-  export const deleteBeneficiary = async function (beneficiary_id, setUser, filterTemporalData) {
+  export const deleteBeneficiary = async function (beneficiary_id, setUser, setData, filterTemporalData) {
     return await axios.delete(`${process.env.REACT_APP_API_URL}beneficiaries/${beneficiary_id}`, {headers: getHeaders()})
       .then(function (response) {
         setHeaders(response.headers)
-        beneficiaryData(setUser, filterTemporalData)
+        beneficiaryData(setUser, setData, filterTemporalData)
         return response
       })
-      .catch(function (response, error) {
+      .catch(function (error) {
         setUser(false)
         return error      
       })
