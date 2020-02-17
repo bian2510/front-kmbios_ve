@@ -23,8 +23,18 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const capitalize = (str) => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+  
+const banks = ["activo", "bancaribe", "bancrecer",
+               "banesco", "banplus", "bicentenario",
+               "bnc", "caroni", "exterior", "fondo_comun",
+               "mercantil", "plaza", "provincial",
+               "tesoro", "venezuela", "100%banco"]
+
 const BeneficiaryForm = (props) => {
-  const { setUser, filterTemporalData, history, beneficiary, location } = props;
+  const { setUser, filterTemporalData, history, beneficiary } = props;
   const classes = useStyles();
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -98,7 +108,7 @@ const BeneficiaryForm = (props) => {
       }) => (
 <form onSubmit={handleSubmit}>
       <div>
-        <TextField error={errors.account_number && touched.account_number && errors.account_number !== null}
+        <TextField type="number" error={errors.account_number && touched.account_number && errors.account_number !== null}
             helperText={errors.account_number && touched.account_number && errors.account_number} label="Numero de cuenta" name="account_number" variant="outlined" onChange={handleChange}
             onBlur={handleBlur}
             value={values.account_number}/>
@@ -129,27 +139,27 @@ const BeneficiaryForm = (props) => {
           value={values.bank}      
           labelWidth={labelWidth}
         >
-          <MenuItem value={"Mercantil"}>Mercantil</MenuItem>
-          <MenuItem value={"Banesco"}>Banesco</MenuItem>
-          <MenuItem value={"Provincial"}>Provincial</MenuItem>
+          {banks.map((bank) => (
+            <MenuItem value={bank}>{capitalize(bank)}</MenuItem>
+          ))}
         </Select>
         <FormHelperText>{errors.bank && touched.bank && errors.bank}</FormHelperText>
       </FormControl>
       <div>
-        <TextField helperText={errors.personal_id && touched.personal_id && errors.personal_id} label="Cedula" name="personal_id" variant="outlined" onChange={handleChange}
+        <TextField type="number" helperText={errors.personal_id && touched.personal_id && errors.personal_id} label="Cedula" name="personal_id" variant="outlined" onChange={handleChange}
             error={errors.personal_id && touched.personal_id && errors.personal_id !== null}
             onBlur={handleBlur}
             value={values.personal_id}/>
       </div>
       <div>
-        <TextField helperText={errors.telephone_number && touched.telephone_number && errors.telephone_number}
+        <TextField type="number" helperText={errors.telephone_number && touched.telephone_number && errors.telephone_number}
             error={errors.telephone_number && touched.telephone_number && errors.telephone_number !== null}
             label="Numero de telefono" name="telephone_number" variant="outlined" onChange={handleChange}
             onBlur={handleBlur}
             value={values.telephone_number}/>
       </div>
       <div>
-        <TextField helperText={errors.mobile_pay && touched.mobile_pay && errors.mobile_pay} label="Pago Movil" name="mobile_pay" variant="outlined" onChange={handleChange}
+        <TextField type="number" helperText={errors.mobile_pay && touched.mobile_pay && errors.mobile_pay} label="Pago Movil" name="mobile_pay" variant="outlined" onChange={handleChange}
             error={errors.mobile_pay && touched.mobile_pay && errors.mobile_pay !== null}
             onBlur={handleBlur}
             value={values.mobile_pay}/>
