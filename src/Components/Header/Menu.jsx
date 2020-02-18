@@ -9,7 +9,7 @@ import MenuList from '@material-ui/core/MenuList';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
 import { signOut } from '../../Services/Calls'
-import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 
 
 const useStyles = makeStyles(theme => ({
@@ -26,6 +26,7 @@ export default function MenuListComposition(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+  const history = useHistory()
 
   const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
@@ -35,9 +36,15 @@ export default function MenuListComposition(props) {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
-    setOpen(false);
-    //signOut(user, setUser)
+
+    handleToggle();
   };
+
+  const logOut = event => {
+    handleClose(event);
+    history.push("/sign_in");
+    signOut(user, setUser);
+  }
 
   function handleListKeyDown(event) {
     if (event.key === 'Tab') {
@@ -49,7 +56,7 @@ export default function MenuListComposition(props) {
   // return focus to the button when we transitioned from !open -> open
   const prevOpen = React.useRef(open);
   React.useEffect(() => {
-    if (prevOpen.current === true && open === false) {
+    if (prevOpen.current && !open) {
       anchorRef.current.focus();
     }
 
@@ -61,7 +68,7 @@ export default function MenuListComposition(props) {
       <div>
         <Button
           ref={anchorRef}
-          aria-controls={open ? 'menu-list-grow' : undefined}
+          aria-controls={open ? 'menu-list-grow' : ''}
           aria-haspopup="true"
           onClick={handleToggle}
         >
@@ -76,13 +83,15 @@ export default function MenuListComposition(props) {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <Link to="/">
-                      <MenuItem onClick={handleClose}>Cuentas</MenuItem>
-                    </Link>
-                    <Link to="/crear_beneficiario">
-                      <MenuItem onClick={handleClose}>Agregar cuenta</MenuItem>
-                    </Link>
-                    <MenuItem onClick={handleClose}>Cerrar sesion</MenuItem>
+                    <MenuItem onClick={handleClose}>
+                      <Link to="/">Cuentas</Link>
+                    </MenuItem>
+                    <MenuItem id="2" onClick={handleClose}>
+                      <Link to="/crear_beneficiario">Agregar cuenta</Link>
+                    </MenuItem>
+                    <MenuItem onClick={logOut}>
+                      Cerrar sesion
+                    </MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
