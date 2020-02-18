@@ -108,7 +108,7 @@ const BeneficiaryForm = (props) => {
       }) => (
 <form onSubmit={handleSubmit}>
       <div>
-        <TextField type="text" pattern="[0-9]*" error={errors.account_number && touched.account_number && errors.account_number !== null}
+        <TextField type="tel" error={errors.account_number && touched.account_number && errors.account_number !== null}
             helperText={errors.account_number && touched.account_number && errors.account_number} label="Numero de cuenta" name="account_number" variant="outlined" onChange={handleChange}
             onBlur={handleBlur}
             value={values.account_number}/>
