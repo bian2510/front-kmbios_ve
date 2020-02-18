@@ -18,6 +18,7 @@ export default function SearchBar(props) {
       style={{ width: 200 }}
       renderInput={params => (
         <TextField {...params} label="Buscar por cedula" variant="outlined"
+                               type="number"
                                fullWidth onChange={(event)=> filterResult(event, data)}
         />
         )}
