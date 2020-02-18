@@ -146,20 +146,20 @@ const BeneficiaryForm = (props) => {
         <FormHelperText>{errors.bank && touched.bank && errors.bank}</FormHelperText>
       </FormControl>
       <div>
-        <TextField type="number" helperText={errors.personal_id && touched.personal_id && errors.personal_id} label="Cedula" name="personal_id" variant="outlined" onChange={handleChange}
+        <TextField type="tel" helperText={errors.personal_id && touched.personal_id && errors.personal_id} label="Cedula" name="personal_id" variant="outlined" onChange={handleChange}
             error={errors.personal_id && touched.personal_id && errors.personal_id !== null}
             onBlur={handleBlur}
             value={values.personal_id}/>
       </div>
       <div>
-        <TextField type="number" helperText={errors.telephone_number && touched.telephone_number && errors.telephone_number}
+        <TextField type="tel" helperText={errors.telephone_number && touched.telephone_number && errors.telephone_number}
             error={errors.telephone_number && touched.telephone_number && errors.telephone_number !== null}
             label="Numero de telefono" name="telephone_number" variant="outlined" onChange={handleChange}
             onBlur={handleBlur}
             value={values.telephone_number}/>
       </div>
       <div>
-        <TextField type="number" helperText={errors.mobile_pay && touched.mobile_pay && errors.mobile_pay} label="Pago Movil" name="mobile_pay" variant="outlined" onChange={handleChange}
+        <TextField type="tel" helperText={errors.mobile_pay && touched.mobile_pay && errors.mobile_pay} label="Pago Movil" name="mobile_pay" variant="outlined" onChange={handleChange}
             error={errors.mobile_pay && touched.mobile_pay && errors.mobile_pay !== null}
             onBlur={handleBlur}
             value={values.mobile_pay}/>
