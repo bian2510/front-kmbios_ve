@@ -42,8 +42,8 @@ export default function MenuListComposition(props) {
 
   const logOut = event => {
     handleClose(event);
+    signOut(setUser);
     history.push("/sign_in");
-    signOut(user, setUser);
   }
 
   function handleListKeyDown(event) {
@@ -67,6 +67,10 @@ export default function MenuListComposition(props) {
     <div className={classes.root}>
       <div>
         <Button
+          edge="start"
+          className={classes.menuButton}
+          color="inherit"
+          aria-label="open drawer"
           ref={anchorRef}
           aria-controls={open ? 'menu-list-grow' : ''}
           aria-haspopup="true"

@@ -47,10 +47,11 @@ const makeParams = (params) => {
       })
   }
 
-  export const signOut = async function logOut() {
+  export const signOut = async function logOut(setUser) {
     return await axios.delete(`${process.env.REACT_APP_API_URL}auth/sign_out`, {headers: getHeaders()})
       .then(function (response) {
         localStorage.clear()
+        setUser(false)
         return response
       })
       .catch(function (error) {
