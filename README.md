@@ -1,10 +1,12 @@
+Deployed in: https://kmbios-ve.herokuapp.com/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `REACT_APP_API_URL=http://localhost:3001/ start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -66,21 +68,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
-
-NOTE:
-The project was built assuming it is hosted at the server root.
-You can control this with the homepage field in your package.json.
-For example, add this to build it for GitHub Pages:
-
-  "homepage" : "http://myname.github.io/myapp",
-
-The build folder is ready to be deployed.
-You may serve it with a static server:
-
-  npm install -g serve
-  serve -s build
-
-Find out more about deployment here:
-
-  bit.ly/CRA-deploy
-
