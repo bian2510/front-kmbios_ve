@@ -3,7 +3,8 @@ import Navigation from "./Components/Header/Navigation";
 import "./App.css";
 import AccountTable from "./Components/Table/Table";
 import FormSignIn from "./Components/Form/SignIn";
-import FormCreateBeneficiary from "./Components/Form/beneficiaryForm";
+import FormCreateBeneficiary from "./Components/Form/beneficiaryCreateForm";
+import FormEditBeneficiary from "./Components/Form/beneficiaryEditForm";
 import {
   BrowserRouter as Router,
   Switch,
@@ -73,7 +74,7 @@ function App() {
             {beneficiary === null ? (
               <Redirect to="/sign_in" />
             ) : (
-              <FormCreateBeneficiary
+              <FormEditBeneficiary
                 setUser={setUser}
                 filterTemporalData={filterTemporalData}
                 beneficiary={beneficiary}
