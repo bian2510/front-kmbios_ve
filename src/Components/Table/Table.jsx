@@ -9,6 +9,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import Icon from '@material-ui/core/Icon';
 import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from "react-router-dom";
 import { deleteBeneficiary } from '../../Services/Calls'
 
@@ -30,7 +31,7 @@ export default function AccountTable(props) {
       <Table className={classes.table} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Editar/Borrar</TableCell>
+            <TableCell>Opciones</TableCell>
             <TableCell align="right">Numero de cuenta</TableCell>
             <TableCell align="right">Nombre</TableCell>
             <TableCell align="right">Apellido</TableCell>
@@ -46,6 +47,7 @@ export default function AccountTable(props) {
               <TableCell component="th" scope="row">
                 <Link to="/editar_beneficiario" onClick={setBeneficiary(beneficiary)}><EditIcon/></Link>
                 <Link><DeleteIcon onClick={() => {deleteRegister(beneficiary.id)}}/></Link>
+                <Icon color="primary">add_circle</Icon>
               </TableCell>
               <TableCell align="right">{beneficiary.account_number}</TableCell>
               <TableCell align="right">{capitalize(beneficiary.name)}</TableCell>
