@@ -25,7 +25,7 @@ export default function FormSignIn(props) {
       validate={values => {
         const errors = {};
         if (!values.email) {
-          errors.email = 'Required';
+          errors.email = 'Requerido';
         } else if (
           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
         ) {
@@ -51,25 +51,32 @@ export default function FormSignIn(props) {
         /* and other goodies */
       }) => (
         <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off">
-          <div><TextField
-            type="email"
-            name="email"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.email}
-          />
-          {errors.email && touched.email && errors.email}
+          <div>
+          <TextField
+                helperText={errors.email && touched.email && errors.email}
+                error={errors.email && touched.email && errors.email !== null}
+                label="Email"
+                name="email"
+                type="email"
+                variant="outlined"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.email}
+              />
           </div>
           <div>
           <TextField
+            label="Password"
+            helperText={errors.password && touched.password && errors.password}
+            error={errors.password && touched.password && errors.password !== null}
             type="password"
             name="password"
             onChange={handleChange}
             onBlur={handleBlur}
+            variant="outlined"
             value={values.password}
           />
           </div>
-          {errors.password && touched.password && errors.password}
           <Button type="submit" disabled={isSubmitting} variant="contained" color="primary">
             Iniciar sesión
           </Button>
