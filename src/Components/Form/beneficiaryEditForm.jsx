@@ -11,7 +11,7 @@ import { updateBeneficiary } from "../../Services/Calls.js";
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
 import InputForm from "./InputForm";
-import { capitalize } from "../../Commons/Commons.js"
+import { capitalize, banks } from "../../Commons/Commons.js"
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -23,25 +23,6 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(0)
   }
 }));
-
-const banks = [
-  "activo",
-  "bancaribe",
-  "bancrecer",
-  "banesco",
-  "banplus",
-  "bicentenario",
-  "bnc",
-  "caroni",
-  "exterior",
-  "fondo_comun",
-  "mercantil",
-  "plaza",
-  "provincial",
-  "tesoro",
-  "venezuela",
-  "100%banco"
-];
 
 const BeneficiaryEditForm = props => {
   const { setUser, filterTemporalData, beneficiary } = props;
