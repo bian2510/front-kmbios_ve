@@ -8,7 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
-import { signOut } from '../../Services/Calls'
+import { signOut } from '../../Services/Calls.js'
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 
 

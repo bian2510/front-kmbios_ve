@@ -14,7 +14,7 @@ import {
   Redirect
 } from "react-router-dom";
 import FormCreateTransaction from "./Components/Form/TransactionCreateForm";
-import { beneficiaryData } from "./Services/Calls";
+import { beneficiaryData } from "./Services/Calls.js";
 
 function App() {
   const session = localStorage.length !== 0 ? true : false;

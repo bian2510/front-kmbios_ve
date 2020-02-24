@@ -11,7 +11,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import Icon from '@material-ui/core/Icon';
 import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from "react-router-dom";
-import { deleteBeneficiary } from '../../Services/Calls'
+import { deleteBeneficiary } from '../../Services/Calls.js'
 import { capitalize } from "../../Commons/Commons.js"
 
 const useStyles = makeStyles({
