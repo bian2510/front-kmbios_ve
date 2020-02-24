@@ -4,7 +4,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { Formik } from "formik";
 import FormHelperText from "@material-ui/core/FormHelperText";
@@ -12,6 +11,7 @@ import { createBeneficiary } from "../../Services/Calls";
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
 import InputForm from "./InputForm";
+import { capitalize } from "../../Commons/Commons.js"
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -23,10 +23,6 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(0)
   }
 }));
-
-const capitalize = str => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
 
 const banks = [
   "activo",

@@ -12,6 +12,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import Icon from '@material-ui/core/Icon';
 import { BrowserRouter as Router, Switch, Route, Link, useRouteMatch } from "react-router-dom";
 import { deleteBeneficiary } from '../../Services/Calls'
+import { capitalize } from "../../Commons/Commons.js"
 
 const useStyles = makeStyles({
   table: {
@@ -22,9 +23,7 @@ const useStyles = makeStyles({
 export default function AccountTable(props) {
   const { temporalData, setUser, filterTemporalData, setBeneficiary } = props;
   const classes = useStyles();
-  const capitalize = (str) => {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-    }
+
   const deleteRegister = (beneficiary_id) => {deleteBeneficiary(beneficiary_id, setUser, filterTemporalData)}
   return (
     <TableContainer component={Paper}>

@@ -4,10 +4,7 @@ import Button from "@material-ui/core/Button";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
-
-const capitalize = str => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-};
+import { capitalize } from "../../Commons/Commons.js"
 
 const BeneficiaryEditForm = props => {
   const { setUser, filterTemporalData, beneficiary } = props;
