@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import TextField from '@material-ui/core/TextField';
-import { makeStyles, createPalette } from '@material-ui/core/styles';
+import React from 'react';
+import InputForm from './InputForm'
+import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { Formik } from 'formik';
 import { signIn } from '../../Services/Calls'
@@ -51,32 +51,26 @@ export default function FormSignIn(props) {
         /* and other goodies */
       }) => (
         <form onSubmit={handleSubmit} className={classes.root} noValidate autoComplete="off">
-          <div>
-          <TextField
-                helperText={errors.email && touched.email && errors.email}
-                error={errors.email && touched.email && errors.email !== null}
-                label="Email"
-                name="email"
-                type="email"
-                variant="outlined"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.email}
-              />
-          </div>
-          <div>
-          <TextField
-            label="Password"
-            helperText={errors.password && touched.password && errors.password}
-            error={errors.password && touched.password && errors.password !== null}
-            type="password"
-            name="password"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            variant="outlined"
-            value={values.password}
+          <InputForm
+              values={values.email}
+              errors={errors.email}
+              touched={touched.email}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              name={"email"}
+              label={"Email"}
+              type={"email"}
           />
-          </div>
+          <InputForm
+              values={values.password}
+              errors={errors.password}
+              touched={touched.password}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              name={"password"}
+              label={"Contraseña"}
+              type={"password"}
+          />
           <Button type="submit" disabled={isSubmitting} variant="contained" color="primary">
             Iniciar sesión
           </Button>
