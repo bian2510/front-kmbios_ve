@@ -45,9 +45,9 @@ export default function AccountTable(props) {
           {temporalData.map(beneficiary => (
             <TableRow key={beneficiary.id}>
               <TableCell component="th" scope="row">
-                <Link to="/editar_beneficiario" onClick={setBeneficiary(beneficiary)}><EditIcon/></Link>
-                <Link><DeleteIcon onClick={() => {deleteRegister(beneficiary.id)}}/></Link>
-                <Icon color="primary">add_circle</Icon>
+                <Link to="/editar_beneficiario" onClick={setBeneficiary(beneficiary)}><EditIcon color="primary"/></Link>
+                <Link><DeleteIcon color="primary" onClick={() => {deleteRegister(beneficiary.id)}}/></Link>
+                <Link to="crear_transaccion" onClick={() => {setBeneficiary(beneficiary)}}><Icon color="primary">add_circle</Icon></Link>
               </TableCell>
               <TableCell align="right">{beneficiary.account_number}</TableCell>
               <TableCell align="right">{capitalize(beneficiary.name)}</TableCell>
