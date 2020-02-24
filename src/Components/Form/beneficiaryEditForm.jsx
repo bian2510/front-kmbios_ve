@@ -11,6 +11,7 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import { createBeneficiary, updateBeneficiary } from "../../Services/Calls";
 import * as Yup from "yup";
 import { useHistory } from "react-router-dom";
+import InputForm from "./InputForm";
 
 const useStyles = makeStyles(theme => ({
   formControl: {
@@ -89,32 +90,24 @@ const BeneficiaryEditForm = props => {
     <div>
       <Formik
         initialValues={{
-          account_number:
-            beneficiary === null ? "" : beneficiary.account_number,
-          name: beneficiary === null ? "" : beneficiary.name,
-          last_name: beneficiary === null ? "" : beneficiary.last_name,
-          bank: beneficiary === null ? "" : beneficiary.bank,
-          personal_id: beneficiary === null ? "" : beneficiary.personal_id,
-          telephone_number:
-            beneficiary === null ? "" : beneficiary.telephone_number,
-          mobile_pay: beneficiary === null ? "" : beneficiary.mobile_pay
+          account_number: beneficiary.account_number,
+          name: beneficiary.name,
+          last_name: beneficiary.last_name,
+          bank: beneficiary.bank,
+          personal_id: beneficiary.personal_id,
+          telephone_number: beneficiary.telephone_number,
+          mobile_pay: beneficiary.mobile_pay
         }}
         validationSchema={SignupSchema}
         onSubmit={(values, { setSubmitting }) => {
-          if (beneficiary === null) {
-            createBeneficiary(values, setUser, filterTemporalData);
-            setSubmitting(false);
-            history.push("/");
-          } else {
-            updateBeneficiary(
-              values,
-              setUser,
-              filterTemporalData,
-              beneficiary.id
-            );
-            setSubmitting(false);
-            history.push("/");
-          }
+          updateBeneficiary(
+            values,
+            setUser,
+            filterTemporalData,
+            beneficiary.id
+          );
+          setSubmitting(false);
+          history.push("/");
         }}
       >
         {({
@@ -128,57 +121,34 @@ const BeneficiaryEditForm = props => {
           /* and other goodies */
         }) => (
           <form onSubmit={handleSubmit}>
-            <div>
-              <TextField
-                type="tel"
-                error={
-                  errors.account_number &&
-                  touched.account_number &&
-                  errors.account_number !== null
-                }
-                helperText={
-                  errors.account_number &&
-                  touched.account_number &&
-                  errors.account_number
-                }
-                label="Numero de cuenta"
-                name="account_number"
-                variant="outlined"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.account_number}
-              />
-            </div>
-            <div>
-              <TextField
-                helperText={errors.name && touched.name && errors.name}
-                error={errors.name && touched.name && errors.name !== null}
-                label="Nombre"
-                name="name"
-                variant="outlined"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.name}
-              />
-            </div>
-            <div>
-              <TextField
-                helperText={
-                  errors.last_name && touched.last_name && errors.last_name
-                }
-                label="Apellido"
-                name="last_name"
-                variant="outlined"
-                onChange={handleChange}
-                error={
-                  errors.last_name &&
-                  touched.last_name &&
-                  errors.last_name !== null
-                }
-                onBlur={handleBlur}
-                value={values.last_name}
-              />
-            </div>
+            <InputForm
+              values={values.account_number}
+              errors={errors.account_number}
+              touched={touched.account_number}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              name={"account_number"}
+              label={"Numero de cuenta"}
+              type={"tel"}
+            />
+            <InputForm
+              values={values.name}
+              errors={errors.name}
+              touched={touched.name}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              name={"name"}
+              label={"Nombre"}
+            />
+            <InputForm
+              values={values.last_name}
+              errors={errors.last_name}
+              touched={touched.last_name}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              name={"last_name"}
+              label={"Apellido"}
+            />
             <FormControl
               variant="outlined"
               className={classes.formControl}
@@ -206,67 +176,36 @@ const BeneficiaryEditForm = props => {
                 {errors.bank && touched.bank && errors.bank}
               </FormHelperText>
             </FormControl>
-            <div>
-              <TextField
-                type="tel"
-                helperText={
-                  errors.personal_id &&
-                  touched.personal_id &&
-                  errors.personal_id
-                }
-                label="Cedula"
-                name="personal_id"
-                variant="outlined"
-                onChange={handleChange}
-                error={
-                  errors.personal_id &&
-                  touched.personal_id &&
-                  errors.personal_id !== null
-                }
-                onBlur={handleBlur}
-                value={values.personal_id}
-              />
-            </div>
-            <div>
-              <TextField
-                type="tel"
-                helperText={
-                  errors.telephone_number &&
-                  touched.telephone_number &&
-                  errors.telephone_number
-                }
-                error={
-                  errors.telephone_number &&
-                  touched.telephone_number &&
-                  errors.telephone_number !== null
-                }
-                label="Numero de telefono"
-                name="telephone_number"
-                variant="outlined"
-                onChange={handleChange}
-                onBlur={handleBlur}
-                value={values.telephone_number}
-              />
-            </div>
-            <div>
-              <TextField
-                type="tel"
-                helperText={
-                  errors.mobile_pay && touched.mobile_pay && errors.mobile_pay
-                }
-                label="Pago Movil"
-                name="mobile_pay"
-                variant="outlined"
-                onChange={handleChange}
-                error={
-                  errors.mobile_pay &&
-                  touched.mobile_pay &&
-                  errors.mobile_pay !== null
-                }
-                onBlur={handleBlur}
-                value={values.mobile_pay}
-              />
-            </div>
+            <InputForm
+              values={values.personal_id}
+              errors={errors.personal_id}
+              touched={touched.personal_id}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              name={"personal_id"}
+              label={"Cedula"}
+              type={"tel"}
+            />
+            <InputForm
+              values={values.telephone_number}
+              errors={errors.telephone_number}
+              touched={touched.telephone_number}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              name={"telephone_number"}
+              label={"Numero de telefono"}
+              type={"tel"}
+            />
+            <InputForm
+              values={values.mobile_pay}
+              errors={errors.mobile_pay}
+              touched={touched.mobile_pay}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+              name={"mobile_pay"}
+              label={"Pago movil"}
+              type={"tel"}
+            />
             <Button
               variant="contained"
               type="submit"
