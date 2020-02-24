@@ -13,6 +13,7 @@ import {
   useRouteMatch,
   Redirect
 } from "react-router-dom";
+import FormCreateTransaction from "./Components/Form/TransactionCreateForm";
 import { beneficiaryData } from "./Services/Calls";
 
 function App() {
@@ -21,6 +22,19 @@ function App() {
   const [beneficiary, setBeneficiary] = useState(null);
   const [data, setData] = useState([]);
   const [temporalData, filterTemporalData] = useState(data);
+
+  const navigationProps = {
+    data, temporalData, filterTemporalData, user, setUser
+  }
+
+  const BeneficiaryFormProps = {
+    setUser, filterTemporalData, beneficiary, user
+  }
+
+  const AccountTableProps = {
+    setBeneficiary, temporalData, setUser, filterTemporalData
+  }
+
   useEffect(() => {
     const fetchData = async () => {
       const responseData = await beneficiaryData(setUser, filterTemporalData);
@@ -31,24 +45,13 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Navigation
-          data={data}
-          temporalData={temporalData}
-          filterTemporalData={filterTemporalData}
-          user={user}
-          setUser={setUser}
-        />
+        <Navigation {...navigationProps}/>
         <Switch>
           <Route exact path="/">
             {user === false ? (
               <Redirect to="/sign_in" />
             ) : (
-              <AccountTable
-                setBeneficiary={setBeneficiary}
-                temporalData={temporalData}
-                setUser={setUser}
-                filterTemporalData={filterTemporalData}
-              />
+              <AccountTable {...AccountTableProps}/>
             )}
           </Route>
           <Route path="/sign_in">
@@ -62,19 +65,21 @@ function App() {
             {user === false ? (
               <Redirect to="/sign_in" />
             ) : (
-              <FormCreateBeneficiary
-                setUser={setUser}
-                filterTemporalData={filterTemporalData}
-                beneficiary={null}
-                user={user}
-              />
+              <FormCreateBeneficiary {...BeneficiaryFormProps}/>
             )}
           </Route>
           <Route path="/editar_beneficiario">
             {beneficiary === null ? (
               <Redirect to="/sign_in" />
             ) : (
-              <FormEditBeneficiary
+              <FormEditBeneficiary {...BeneficiaryFormProps} />
+            )}
+          </Route>
+          <Route path="/crear_transaccion">
+            {beneficiary === null ? (
+              <Redirect to="/sign_in" />
+            ) : (
+              <FormCreateTransaction
                 setUser={setUser}
                 filterTemporalData={filterTemporalData}
                 beneficiary={beneficiary}
