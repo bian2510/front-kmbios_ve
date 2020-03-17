@@ -24,9 +24,9 @@ const makeParams = (params) => {
   return await axios.get(`${process.env.REACT_APP_API_URL}`, { headers: getHeaders()})
     .then(function (response) {
       setHeaders(response.headers)
-      setData(response.data)
+      setData(response.data.beneficiaries)
       setUser(true)
-      return response.data
+      return response.data.beneficiaries
     })
     .catch(function (error) {
       setUser(false)
@@ -35,7 +35,7 @@ const makeParams = (params) => {
   }
 
   export const signIn = async function logIn(body, setUser) {
-    return await axios.post(`${process.env.REACT_APP_API_URL}auth/sign_in`, body)
+    return await axios.post(`${process.env.REACT_APP_API_URL}admin_auth/sign_in`, body)
       .then(function (response) {
         setHeaders(response.headers)
         setUser(true)
