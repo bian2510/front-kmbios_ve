@@ -20,7 +20,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default function AccountTable(props) {
+export default function BeneficiaryTable(props) {
   const { temporalData, setUser, filterTemporalData, setBeneficiary } = props;
   const classes = useStyles();
 

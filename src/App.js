@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Navigation from "./Components/Header/Navigation";
 import "./App.css";
-import AccountTable from "./Components/Table/Table";
+import BeneficiaryTable from "./Components/Table/BeneficiaryTable";
 import FormSignIn from "./Components/Form/SignIn";
 import FormCreateBeneficiary from "./Components/Form/beneficiaryCreateForm";
 import FormEditBeneficiary from "./Components/Form/beneficiaryEditForm";
@@ -31,7 +31,7 @@ function App() {
     setUser, filterTemporalData, beneficiary, user
   }
 
-  const AccountTableProps = {
+  const BeneficiaryTableProps = {
     setBeneficiary, temporalData, setUser, filterTemporalData
   }
 
@@ -51,7 +51,7 @@ function App() {
             {user === false ? (
               <Redirect to="/sign_in" />
             ) : (
-              <AccountTable {...AccountTableProps}/>
+              <BeneficiaryTable {...BeneficiaryTableProps}/>
             )}
           </Route>
           <Route path="/sign_in">
