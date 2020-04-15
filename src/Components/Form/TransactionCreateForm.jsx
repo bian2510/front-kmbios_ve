@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import { capitalize } from "../../Commons/Commons.js"
 
 const BeneficiaryEditForm = props => {
-  const { setUser, filterTemporalData, beneficiary } = props;
+  const { setUser, beneficiary } = props;
   const history = useHistory();
 
   const SignupSchema = Yup.object().shape({

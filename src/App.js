@@ -14,55 +14,58 @@ import {
   Redirect
 } from "react-router-dom";
 import FormCreateTransaction from "./Components/Form/TransactionCreateForm";
-import { beneficiaryData } from "./Services/Calls.js";
+import { LoadData } from "./Services/Calls.js";
 
 function App() {
-  const session = localStorage.length !== 0 ? true : false;
-  const [user, setUser] = useState(session);
+  const session_is_logged = localStorage.length !== 0 ? true : false;
+  const [session, setSession] = useState(session_is_logged);
   const [beneficiary, setBeneficiary] = useState(null);
+  // For table of transactions
+  const [transactions, setTransactions] = useState([])
   const [data, setData] = useState([]);
+  const [beneficiaries, setBeneficiaries] = useState([])
   const [temporalData, filterTemporalData] = useState(data);
+  const [list, setList] = useState(beneficiaries)
 
   const navigationProps = {
-    data, temporalData, filterTemporalData, user, setUser
+    data, temporalData, filterTemporalData, session, setSession
   }
 
   const BeneficiaryFormProps = {
-    setUser, filterTemporalData, beneficiary, user
+    setSession, setData, beneficiary, session
   }
 
   const BeneficiaryTableProps = {
-    setBeneficiary, temporalData, setUser, filterTemporalData
+    beneficiaries, temporalData, setSession, filterTemporalData, setBeneficiary, list, setList
   }
 
   useEffect(() => {
     const fetchData = async () => {
-      const responseData = await beneficiaryData(setUser, filterTemporalData);
-      setData(responseData);
+      const responseData = await LoadData(setSession, setBeneficiaries, setTransactions);
     };
     fetchData();
-  }, [user]);
+  }, [session, data]);
   return (
     <div className="App">
       <Router>
         <Navigation {...navigationProps}/>
         <Switch>
           <Route exact path="/">
-            {user === false ? (
+            {session === false ? (
               <Redirect to="/sign_in" />
             ) : (
               <BeneficiaryTable {...BeneficiaryTableProps}/>
             )}
           </Route>
           <Route path="/sign_in">
-            {user === false ? (
-              <FormSignIn setUser={setUser} />
+            {session === false ? (
+              <FormSignIn setSession={setSession} />
             ) : (
               <Redirect to="/" />
             )}
           </Route>
           <Route path="/crear_beneficiario">
-            {user === false ? (
+            {session === false ? (
               <Redirect to="/sign_in" />
             ) : (
               <FormCreateBeneficiary {...BeneficiaryFormProps}/>
@@ -80,10 +83,10 @@ function App() {
               <Redirect to="/sign_in" />
             ) : (
               <FormCreateTransaction
-                setUser={setUser}
+                setSession={setSession}
                 filterTemporalData={filterTemporalData}
                 beneficiary={beneficiary}
-                user={user}
+                session={session}
               />
             )}
           </Route>

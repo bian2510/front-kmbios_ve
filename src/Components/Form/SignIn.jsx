@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function FormSignIn(props) {
-  const { setUser } = props
+  const { setSession } = props
   const classes = useStyles();
 
   return (
@@ -35,7 +35,7 @@ export default function FormSignIn(props) {
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          signIn(values, setUser)
+          signIn(values, setSession)
           setSubmitting(false);
         }, 400);
       }}

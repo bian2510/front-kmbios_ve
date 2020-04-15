@@ -20,10 +20,10 @@ const useStyles = makeStyles({
 })
 // PROBAR QUE ESTE FUNCIONANDO Y AGREGAR LO QUE HAGA FALTA PARA QUE FUNCIONE
 export default function TransactionTable(props) {
-  const { temporalData, setUser, filterTemporalData, setBeneficiary } = props;
+  const { temporalData, setSession, filterTemporalData, setBeneficiary } = props;
   const classes = useStyles();
 
-  const deleteRegister = (transaction_id) => {deleteTransaction(transaction_id, setUser, filterTemporalData)}
+  const deleteRegister = (transaction_id) => {deleteTransaction(transaction_id, setSession, filterTemporalData)}
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} size="small" aria-label="a dense table">

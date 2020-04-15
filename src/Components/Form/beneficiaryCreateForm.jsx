@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const BeneficiaryCreateForm = props => {
-  const { setUser, filterTemporalData } = props;
+  const { setSession, setData } = props;
   const classes = useStyles();
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -77,7 +77,7 @@ const BeneficiaryCreateForm = props => {
         }}
         validationSchema={SignupSchema}
         onSubmit={(values, { setSubmitting }) => {
-          createBeneficiary(values, setUser, filterTemporalData);
+          createBeneficiary(values, setSession, setData);
           setSubmitting(false);
           history.push("/");
         }}
