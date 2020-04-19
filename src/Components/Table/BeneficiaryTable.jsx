@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BeneficiaryTable(props) {
-  const { setSession, setBeneficiary, beneficiaries, list, setList } = props;
+  const { setSession, setBeneficiary, beneficiaries, list, setList, setData } = props;
   const classes = useStyles();
   const filter_list = (event, beneficiaries) => {
     setList(
@@ -86,7 +86,7 @@ export default function BeneficiaryTable(props) {
     );
   };
   const deleteRegister = (beneficiary_id) => {
-    deleteBeneficiary(beneficiary_id, setSession);
+    deleteBeneficiary(beneficiary_id, setSession, setData);
   };
   useEffect(() => {
     const updateList = async () => {
@@ -127,7 +127,7 @@ export default function BeneficiaryTable(props) {
                 <TableCell component="th" scope="row">
                   <Link
                     to="/editar_beneficiario"
-                    onClick={console.log(beneficiary)}
+                    onClick={() => {setBeneficiary(beneficiary)}}
                   >
                     <EditIcon color="primary" />
                   </Link>

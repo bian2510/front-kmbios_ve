@@ -20,13 +20,22 @@ const makeParams = (params) => {
   return params
 }
 
-  export const LoadData = async function loadData(setSession, setBeneficiaries, setTransactions){
+const makeParamsTransaction = (params, beneficiary_id) => {
+  params.money_received = parseInt(params.money_received)
+  params.rate = parseInt(params.rate)
+  params.beneficiary_id = beneficiary_id
+  params.user_id = parseInt(params.user_id)
+  return params
+}
+
+  export const LoadData = async function loadData(setSession, setBeneficiaries, setTransactions, setUsers){
   return await axios.get(`${process.env.REACT_APP_API_URL}`, { headers: getHeaders()})
     .then(function (response) {
       setHeaders(response.headers)
       setSession(true)
       setBeneficiaries(response.data.beneficiaries)
       setTransactions(response.data.transactions)
+      setUsers(response.data.users)
       return response.data
     })
     .catch(function (error) {
@@ -81,7 +90,7 @@ const makeParams = (params) => {
       })
   }
 
-  export const updateBeneficiary = async function update(params, setSession, setData, beneficiary_id, filterTemporalData) {
+  export const updateBeneficiary = async function update(params, setSession, setData, beneficiary_id) {
     const body = makeParams(params)
     return await axios.put(`${process.env.REACT_APP_API_URL}beneficiaries/${beneficiary_id}`, body, {headers: getHeaders()})
       .then(function (response) {
@@ -90,15 +99,8 @@ const makeParams = (params) => {
         return response
       })
       .catch(function (error) {
-        if (error.response.status === 401) {
-          setSession(false)
-          window.alert("Inicie sesion nuevamente")
-          return error.response
-        }
-        if (error.response.status === 422) {
-          window.alert("Numero de cuenta ya existe")
-          return error
-        }
+        setSession(false)
+        return error.response
       })
   }
 
@@ -106,6 +108,21 @@ const makeParams = (params) => {
     return await axios.delete(`${process.env.REACT_APP_API_URL}beneficiaries/${beneficiary_id}`, {headers: getHeaders()})
       .then(function (response) {
         setHeaders(response.headers)
+        setData(response.data)
+        return response
+      })
+      .catch(function (error) {
+        setSession(false)
+        return error      
+      })
+  }
+
+  export const createTransaction = async function (params, beneficiary_id, setSession, setData) {
+    const body = makeParamsTransaction(params, beneficiary_id)
+    return await axios.post(`${process.env.REACT_APP_API_URL}transactions`, body, {headers: getHeaders()})
+      .then(function (response) {
+        setHeaders(response.headers)
+        makeParamsTransaction(params)
         setData(response.data)
         return response
       })

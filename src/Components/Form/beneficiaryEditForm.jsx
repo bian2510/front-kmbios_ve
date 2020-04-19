@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const BeneficiaryEditForm = props => {
-  const { setSession, filterTemporalData, beneficiary } = props;
+  const { setSession, setData, beneficiary } = props;
   const classes = useStyles();
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -80,8 +80,8 @@ const BeneficiaryEditForm = props => {
           updateBeneficiary(
             values,
             setSession,
-            filterTemporalData,
-            beneficiary.account_number
+            setData,
+            beneficiary.id
           );
           setSubmitting(false);
           history.push("/");

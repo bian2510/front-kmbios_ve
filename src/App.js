@@ -23,6 +23,7 @@ function App() {
   // For table of transactions
   const [transactions, setTransactions] = useState([])
   const [data, setData] = useState([]);
+  const [users, setUsers] = useState([])
   const [beneficiaries, setBeneficiaries] = useState([])
   const [temporalData, filterTemporalData] = useState(data);
   const [list, setList] = useState(beneficiaries)
@@ -36,12 +37,12 @@ function App() {
   }
 
   const BeneficiaryTableProps = {
-    beneficiaries, temporalData, setSession, filterTemporalData, setBeneficiary, list, setList
+    beneficiaries, setData, setSession, filterTemporalData, setBeneficiary, list, setList
   }
 
   useEffect(() => {
     const fetchData = async () => {
-      const responseData = await LoadData(setSession, setBeneficiaries, setTransactions);
+      const responseData = await LoadData(setSession, setBeneficiaries, setTransactions, setUsers);
     };
     fetchData();
   }, [session, data]);
@@ -87,6 +88,7 @@ function App() {
                 filterTemporalData={filterTemporalData}
                 beneficiary={beneficiary}
                 session={session}
+                users={users}
               />
             )}
           </Route>
