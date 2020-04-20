@@ -45,8 +45,9 @@ const useStyles = makeStyles(theme => ({
 
 export default function PrimarySearchAppBar(props) {
   const {
-    session,
-    setSession
+    admin,
+    setSession,
+    setAdmin
   } = props;
 
   const classes = useStyles();
@@ -55,7 +56,7 @@ export default function PrimarySearchAppBar(props) {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <MenuListComposition setSession={setSession} />
+          <MenuListComposition setSession={setSession} admin={admin} setAdmin={setAdmin} />
           <Typography className={classes.title} variant="h6" noWrap>
             Kmbios-VE
           </Typography>

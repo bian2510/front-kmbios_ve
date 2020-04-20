@@ -44,23 +44,48 @@ const makeParamsTransaction = (params, beneficiary_id) => {
     })
   }
 
-  export const signIn = async function logIn(body, setSession) {
-    return await axios.post(`${process.env.REACT_APP_API_URL}admin_auth/sign_in`, body)
+  export const signInUser = async function logIn(body, setSession) {
+    return await axios.post(`${process.env.REACT_APP_API_URL}user_auth/sign_in`, body)
       .then(function (response) {
         setHeaders(response.headers)
         setSession(true)
         return response
       })
       .catch(function (error) {
-        setSession(false)
         return error      
       })
   }
 
-  export const signOut = async function logOut(setSession) {
-    return await axios.delete(`${process.env.REACT_APP_API_URL}auth/sign_out`, {headers: getHeaders()})
+  export const signOutUser = async function logOut(setSession) {
+    return await axios.delete(`${process.env.REACT_APP_API_URL}user_auth/sign_out`, {headers: getHeaders()})
       .then(function (response) {
         localStorage.clear()
+        setSession(false)
+        return response
+      })
+      .catch(function (error) {
+        return error      
+      })
+  }
+  export const signInAdmin = async function logIn(body, setSession, setAdmin) {
+    return await axios.post(`${process.env.REACT_APP_API_URL}admin_auth/sign_in`, body)
+      .then(function (response) {
+        setHeaders(response.headers)
+        setAdmin(true)
+        setSession(true)
+        return response
+      })
+      .catch(function (error) {
+        return error      
+      })
+  }
+
+  export const signOutAdmin = async function logOut(setSession, setAdmin, admin) {
+    return await axios.delete(`${process.env.REACT_APP_API_URL}admin_auth/sign_out`, {headers: getHeaders()})
+      .then(function (response) {
+        console.log(admin)
+        localStorage.clear()
+        setAdmin(false)
         setSession(false)
         return response
       })

@@ -8,7 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MenuList from '@material-ui/core/MenuList';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles } from '@material-ui/core/styles';
-import { signOut } from '../../Services/Calls.js'
+import { signOutUser, signOutAdmin } from '../../Services/Calls.js'
 import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
 
 
@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function MenuListComposition(props) {
-  const { setSession } = props
+  const { setSession, admin, setAdmin } = props
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -42,7 +42,8 @@ export default function MenuListComposition(props) {
 
   const logOut = event => {
     handleClose(event);
-    signOut(setSession);
+    console.log(admin);
+    (admin === true) ? signOutAdmin(setSession, setAdmin, admin) : signOutUser(setSession)
   }
 
   function handleListKeyDown(event) {

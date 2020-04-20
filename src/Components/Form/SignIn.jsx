@@ -3,7 +3,10 @@ import InputForm from './InputForm'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { Formik } from 'formik';
-import { signIn } from '../../Services/Calls.js'
+import { signInAdmin, signInUser } from '../../Services/Calls.js'
+import {
+  useLocation
+} from "react-router-dom";
 const useStyles = makeStyles(theme => ({
   root: {
     '& .MuiTextField-root': {
@@ -14,12 +17,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function FormSignIn(props) {
-  const { setSession } = props
+  const { setSession, setAdmin } = props
   const classes = useStyles();
+  const location = useLocation();
 
   return (
     <div>
-      <h2>Iniciar sesión</h2>
+      <h2>Iniciar sesión {(location.pathname === '/admin/sign_in') ? "como administrador" : ""}</h2>
       <Formik
       initialValues={{ email: '', password: '' }}
       validate={values => {
@@ -35,7 +39,7 @@ export default function FormSignIn(props) {
       }}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          signIn(values, setSession)
+          (String(location.pathname) === '/sign_in') ? signInUser(values, setSession) : signInAdmin(values, setSession, setAdmin)
           setSubmitting(false);
         }, 400);
       }}

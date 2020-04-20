@@ -25,9 +25,11 @@ function App() {
   const [data, setData] = useState([]);
   const [users, setUsers] = useState([])
   const [beneficiaries, setBeneficiaries] = useState([])
+  const [user, setUser] = useState(false)
+  const [admin, setAdmin] = useState(false)
   
   const navigationProps = {
-    data, session, setSession
+    session, setSession, admin, setAdmin
   }
 
   const BeneficiaryFormProps = {
@@ -53,18 +55,25 @@ function App() {
       <Router>
         <Navigation {...navigationProps}/>
         <Switch>
+          <Route path="/sign_in">
+            {session === false ? (
+              <FormSignIn setSession={setSession}/>
+            ) : (
+              <Redirect to="/" />
+            )}
+          </Route>
+          <Route path="/admin/sign_in">
+            {session === false ? (
+              <FormSignIn setSession={setSession} setAdmin={setAdmin} />
+            ) : (
+              <Redirect to="/" />
+            )}
+          </Route>
           <Route exact path="/">
             {session === false ? (
               <Redirect to="/sign_in" />
             ) : (
               <BeneficiaryTable {...BeneficiaryTableProps}/>
-            )}
-          </Route>
-          <Route path="/sign_in">
-            {session === false ? (
-              <FormSignIn setSession={setSession} />
-            ) : (
-              <Redirect to="/" />
             )}
           </Route>
           <Route path="/crear_beneficiario">
