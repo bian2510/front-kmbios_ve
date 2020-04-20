@@ -84,7 +84,6 @@ export default function TransactionTable(props) {
   };
 
   const build_transaction_data = (transaction, beneficiaries, users) => {
-    console.log(beneficiaries)
     return {
       id: transaction.id,
       user: users.find((user) => {

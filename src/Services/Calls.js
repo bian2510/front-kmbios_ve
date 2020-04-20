@@ -83,7 +83,6 @@ const makeParamsTransaction = (params, beneficiary_id) => {
   export const signOutAdmin = async function logOut(setSession, setAdmin, admin) {
     return await axios.delete(`${process.env.REACT_APP_API_URL}admin_auth/sign_out`, {headers: getHeaders()})
       .then(function (response) {
-        console.log(admin)
         localStorage.clear()
         setAdmin(false)
         setSession(false)

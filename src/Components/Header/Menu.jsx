@@ -42,7 +42,6 @@ export default function MenuListComposition(props) {
 
   const logOut = event => {
     handleClose(event);
-    console.log(admin);
     (admin === true) ? signOutAdmin(setSession, setAdmin, admin) : signOutUser(setSession)
   }
 
