@@ -76,8 +76,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function BeneficiaryTable(props) {
-  const { setSession, setBeneficiary, beneficiaries, list, setList, setData } = props;
+  const { setSession, setBeneficiary, beneficiaries, setData } = props;
   const classes = useStyles();
+  const [list, setList] = useState(beneficiaries)
   const filter_list = (event, beneficiaries) => {
     setList(
       beneficiaries.filter((el) => {
@@ -131,14 +132,12 @@ export default function BeneficiaryTable(props) {
                   >
                     <EditIcon color="primary" />
                   </Link>
-                  <Link>
                     <DeleteIcon
                       color="primary"
                       onClick={() => {
                         deleteRegister(beneficiary.id);
                       }}
                     />
-                  </Link>
                   <Link
                     to="crear_transaccion"
                     onClick={() => {
