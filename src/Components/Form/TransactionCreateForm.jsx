@@ -69,7 +69,7 @@ const BeneficiaryEditForm = props => {
         onSubmit={(values, { setSubmitting }) => {
           createTransaction(values, beneficiary.id, setSession)
           setSubmitting(false);
-          //history.push("/");
+          history.push("/");
         }}
       >
         {({

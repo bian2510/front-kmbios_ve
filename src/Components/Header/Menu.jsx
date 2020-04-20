@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function MenuListComposition(props) {
-  const { user, setUser } = props
+  const { setSession } = props
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
@@ -42,8 +42,7 @@ export default function MenuListComposition(props) {
 
   const logOut = event => {
     handleClose(event);
-    signOut(setUser);
-    history.push("/sign_in");
+    signOut(setSession);
   }
 
   function handleListKeyDown(event) {
@@ -87,12 +86,15 @@ export default function MenuListComposition(props) {
               <Paper>
                 <ClickAwayListener onClickAway={handleClose}>
                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                    <MenuItem onClick={handleClose}>
-                      <Link to="/">Cuentas</Link>
-                    </MenuItem>
-                    <MenuItem id="2" onClick={handleClose}>
-                      <Link to="/crear_beneficiario">Agregar cuenta</Link>
-                    </MenuItem>
+                    <Link to="/">
+                    <MenuItem onClick={handleClose}>Cuentas</MenuItem>
+                    </Link>
+                    <Link to="/transacciones">
+                      <MenuItem onClick={handleClose}>Transacciones</MenuItem>
+                    </Link>
+                    <Link to="/crear_beneficiario">
+                      <MenuItem onClick={handleClose}>Agregar cuenta</MenuItem>
+                    </Link>
                     <MenuItem onClick={logOut}>
                       Cerrar sesion
                     </MenuItem>
