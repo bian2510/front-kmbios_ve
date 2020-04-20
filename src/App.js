@@ -14,22 +14,20 @@ import {
   Redirect
 } from "react-router-dom";
 import FormCreateTransaction from "./Components/Form/TransactionCreateForm";
+import TransactionTable from "./Components/Table/TransactionTable";
 import { LoadData } from "./Services/Calls.js";
 
 function App() {
   const session_is_logged = localStorage.length !== 0 ? true : false;
   const [session, setSession] = useState(session_is_logged);
   const [beneficiary, setBeneficiary] = useState(null);
-  // For table of transactions
   const [transactions, setTransactions] = useState([])
   const [data, setData] = useState([]);
   const [users, setUsers] = useState([])
   const [beneficiaries, setBeneficiaries] = useState([])
-  const [temporalData, filterTemporalData] = useState(data);
-  const [list, setList] = useState(beneficiaries)
-
+  
   const navigationProps = {
-    data, temporalData, filterTemporalData, session, setSession
+    data, session, setSession
   }
 
   const BeneficiaryFormProps = {
@@ -37,12 +35,16 @@ function App() {
   }
 
   const BeneficiaryTableProps = {
-    beneficiaries, setData, setSession, filterTemporalData, setBeneficiary, list, setList
+    beneficiaries, setData, setSession, setBeneficiary
+  }
+
+  const TransactionTableProps = {
+    transactions, beneficiaries, users, setData, setSession, session
   }
 
   useEffect(() => {
     const fetchData = async () => {
-      const responseData = await LoadData(setSession, setBeneficiaries, setTransactions, setUsers);
+      await LoadData(setSession, setBeneficiaries, setTransactions, setUsers);
     };
     fetchData();
   }, [session, data]);
@@ -85,10 +87,17 @@ function App() {
             ) : (
               <FormCreateTransaction
                 setSession={setSession}
-                filterTemporalData={filterTemporalData}
                 beneficiary={beneficiary}
                 session={session}
                 users={users}
+              />
+            )}
+          </Route>
+          <Route path="/transacciones">
+            {session === false ? (
+              <Redirect to="/sign_in" />
+            ) : (
+              <TransactionTable {...TransactionTableProps}
               />
             )}
           </Route>

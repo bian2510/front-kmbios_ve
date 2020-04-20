@@ -45,33 +45,20 @@ const useStyles = makeStyles(theme => ({
 
 export default function PrimarySearchAppBar(props) {
   const {
-    data,
-    temporalData,
-    filterTemporalData,
     session,
     setSession
   } = props;
 
   const classes = useStyles();
 
-  function filterResult(event, data) {
-    filterTemporalData(data.filter((el) => {
-      return el.personal_id.toString().startsWith(event.target.value)
-          }))   
-  }  
-
   return (
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <MenuListComposition session={session} setSession={setSession} />
+          <MenuListComposition setSession={setSession} />
           <Typography className={classes.title} variant="h6" noWrap>
             Kmbios-VE
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-            </div>
-          </div>
         </Toolbar>
       </AppBar>
     </div>
