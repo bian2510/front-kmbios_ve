@@ -7,6 +7,8 @@ import { signInAdmin, signInUser } from '../../Services/Calls.js'
 import {
   useLocation
 } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from "react-router-dom";
+
 const useStyles = makeStyles(theme => ({
   root: {
     '& .MuiTextField-root': {
@@ -23,6 +25,7 @@ export default function FormSignIn(props) {
 
   return (
     <div>
+      {(location.pathname === '/admin/sign_in') ? false : <Link to="/admin/sign_in">Iniciar session como administrador</Link>}
       <h2>Iniciar sesión {(location.pathname === '/admin/sign_in') ? "como administrador" : ""}</h2>
       <Formik
       initialValues={{ email: '', password: '' }}
