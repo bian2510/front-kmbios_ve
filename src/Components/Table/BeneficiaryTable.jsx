@@ -19,7 +19,7 @@ import {
   Link,
   useRouteMatch,
 } from "react-router-dom";
-import { deleteBeneficiary } from "../../Services/Calls.js";
+import { showBeneficiaries, deleteBeneficiary } from "../../Services/Beneficiaries/BeneficiariesRequest";
 import { capitalize } from "../../Commons/Commons.js";
 
 const useStyles = makeStyles((theme) => ({

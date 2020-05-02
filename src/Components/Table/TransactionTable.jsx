@@ -82,49 +82,48 @@ export default function TransactionTable(props) {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
-  const build_transaction_data = (transaction, beneficiaries, users) => {
-    return {
-      id: transaction.id,
-      user: users.find((user) => {
-        if (user.id === transaction.user_id) {
-          return user
-        }
-      }).email,
-      bank: beneficiaries.find((beneficiary) => {
-        if (beneficiary.id === transaction.beneficiary_id) {
-          return beneficiary
-        }
-      }).bank,
-      account_number: beneficiaries.find((beneficiary) => {
-        if (beneficiary.id === transaction.beneficiary_id) {
-          return beneficiary
-        }
-      }).account_number,
-      mobile_pay: beneficiaries.find((beneficiary) => {
-        if (beneficiary.id === transaction.beneficiary_id) {
-          return beneficiary
-        }
-      }).mobile_pay,
-      personal_id: beneficiaries.find((beneficiary) => {
-        if (beneficiary.id === transaction.beneficiary_id) {
-          return beneficiary
-        }
-      }).personal_id,
-      name: beneficiaries.find((beneficiary) => {
-        if (beneficiary.id === transaction.beneficiary_id) {
-          return beneficiary
-        }
-      }).name,
-      last_name: beneficiaries.find((beneficiary) => {
-        if (beneficiary.id === transaction.beneficiary_id) {
-          return beneficiary
-        }
-      }).last_name,
-      money_sent: transaction.money_sent,
-      status: (transaction.in_progress === true && transactions.finished === true) ? "Completada" : "En progreso"
-    }
-  }
+  //const build_transaction_data = (transaction, beneficiaries, users) => {
+  //  return {
+  //    id: transaction.id,
+  //    user: users.find((user) => {
+  //      if (user.id === transaction.user_id) {
+  //        return user
+  //      }
+  //    }).email,
+  //    bank: beneficiaries.find((beneficiary) => {
+  //      if (beneficiary.id === transaction.beneficiary_id) {
+  //        return beneficiary
+  //      }
+  //    }).bank,
+  //    account_number: beneficiaries.find((beneficiary) => {
+  //      if (beneficiary.id === transaction.beneficiary_id) {
+  //        return beneficiary
+  //      }
+  //    }).account_number,
+  //    mobile_pay: beneficiaries.find((beneficiary) => {
+  //      if (beneficiary.id === transaction.beneficiary_id) {
+  //        return beneficiary
+  //      }
+  //    }).mobile_pay,
+  //    personal_id: beneficiaries.find((beneficiary) => {
+  //      if (beneficiary.id === transaction.beneficiary_id) {
+  //        return beneficiary
+  //      }
+  //    }).personal_id,
+  //    name: beneficiaries.find((beneficiary) => {
+  //      if (beneficiary.id === transaction.beneficiary_id) {
+  //        return beneficiary
+  //      }
+  //    }).name,
+  //    last_name: beneficiaries.find((beneficiary) => {
+  //      if (beneficiary.id === transaction.beneficiary_id) {
+  //        return beneficiary
+  //      }
+  //    }).last_name,
+  //    money_sent: transaction.money_sent,
+  //    status: (transaction.in_progress === true && transactions.finished === true) ? "Completada" : "En progreso"
+  //  }
+  //}
 
   const filter_list = (event, transactions) => {
     setList(
@@ -144,7 +143,7 @@ export default function TransactionTable(props) {
     };
     updateList();
   }, [transactions]);
-
+  console.log(transactions)
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
@@ -176,15 +175,19 @@ export default function TransactionTable(props) {
           <TableBody>
             {list &&
             list.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((transaction) => {
-              const data = build_transaction_data(transaction, beneficiaries, users)
               return (
-                <TableRow hover role="checkbox" tabIndex={-1} key={data.id}>
+                <TableRow hover role="checkbox" tabIndex={-1} key={transaction.id}>
                   {columns.map((column) => {
-                    const value = data[column.id];
+                    console.log(column)
+                    const value = transaction[column.id];
                     return (
-                      <TableCell key={column.id} align={column.align}>
-                        {column.format && typeof value === 'number' ? column.format(value) : value}
+                      //<TableCell key={column.id} align={column.align}>
+                      //  {column.format && typeof value === 'number' ? column.format(value) : value}
+                      //</TableCell>
+                      <TableCell align="right">
+                        {transaction}
                       </TableCell>
+
                     );
                   })}
                 </TableRow>

@@ -3,7 +3,8 @@ import InputForm from './InputForm'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { Formik } from 'formik';
-import { signInAdmin, signInUser } from '../../Services/Calls.js'
+import { signInAdmin } from '../../Services/Authentication/AuthAdmin'
+import { signInUser } from '../../Services/Authentication/AuthUser'
 import {
   useLocation
 } from "react-router-dom";

@@ -6,7 +6,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { createTransaction } from "../../Services/Calls.js";
+import { createTransaction } from "../../Services/Transactions/TransactionsRequest";
 import { useHistory } from "react-router-dom";
 import { capitalize } from "../../Commons/Commons.js"
 import { makeStyles } from "@material-ui/core/styles";
@@ -113,7 +113,7 @@ const BeneficiaryEditForm = props => {
                 id="demo-simple-select-outlined-label"
               >
                 Usuario
-              </InputLabel>  
+              </InputLabel>
               <Select
                   name="user_id"
                   labelId="demo-simple-select-outlined-label"
