@@ -15,7 +15,8 @@ import {
 } from "react-router-dom";
 import FormCreateTransaction from "./Components/Form/TransactionCreateForm";
 import TransactionTable from "./Components/Table/TransactionTable";
-import { LoadData } from "./Services/Calls.js";
+import { showBeneficiaries } from "./Services/Beneficiaries/BeneficiariesRequest";
+import { showTransactions } from "./Services/Transactions/TransactionsRequest";
 
 function App() {
   const session_is_logged = localStorage.length !== 0 ? true : false;
@@ -27,7 +28,7 @@ function App() {
   const [beneficiaries, setBeneficiaries] = useState([])
   const [user, setUser] = useState(false)
   const [admin, setAdmin] = useState(false)
-  
+
   const navigationProps = {
     session, setSession, admin, setAdmin
   }
@@ -45,10 +46,14 @@ function App() {
   }
 
   useEffect(() => {
-    const fetchData = async () => {
-      await LoadData(setSession, setBeneficiaries, setTransactions, setUsers);
+    const fetchDataBeneficiaries = async () => {
+      await showBeneficiaries(setSession, setBeneficiaries);
     };
-    fetchData();
+    const fetchDataTransactions = async () => {
+      await showTransactions(setSession, setTransactions);
+    };
+    fetchDataTransactions();
+    fetchDataBeneficiaries();
   }, [session, data]);
   return (
     <div className="App">
@@ -99,6 +104,7 @@ function App() {
                 beneficiary={beneficiary}
                 session={session}
                 users={users}
+                setTransactions={setTransactions}
               />
             )}
           </Route>
