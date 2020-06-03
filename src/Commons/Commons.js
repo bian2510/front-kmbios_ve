@@ -3,11 +3,17 @@ export const capitalize = str => {
 };
 
 export const setHeaders = (user) => {
-  if (user['access-token'] !== "") {
+  if (user['access-token'] !== undefined && user['access-token'] !== "") {
     localStorage.setItem('user', JSON.stringify(user))
   } else { return
 
   }
+}
+
+export const multipartHeaders = () => {
+  const headers = getHeaders()
+  headers["content-type"] = "multipart/form-data"
+  return headers
 }
 
 export const getHeaders = () => {

@@ -28,7 +28,7 @@ const BeneficiaryEditForm = props => {
   const [labelWidth, setLabelWidth] = React.useState(0);
   const classes = useStyles();
   const inputLabel = React.useRef(null);
-  const { beneficiary, users, setSession } = props;
+  const { beneficiary, setSession, setTransactions } = props;
   const history = useHistory();
   const SignupSchema = Yup.object().shape({
     money_received: Yup.string()
@@ -67,9 +67,9 @@ const BeneficiaryEditForm = props => {
         }}
         validationSchema={SignupSchema}
         onSubmit={(values, { setSubmitting }) => {
-          createTransaction(values, beneficiary.id, setSession)
+          createTransaction(values, beneficiary.id, setSession, setTransactions)
           setSubmitting(false);
-          history.push("/");
+          history.push("/transacciones");
         }}
       >
         {({
@@ -106,7 +106,7 @@ const BeneficiaryEditForm = props => {
             <FormControl
               variant="outlined"
               className={classes.formControl}
-              error={errors.users && touched.users && errors.users !== null}
+              error={errors.beneficiary && touched.beneficiary && errors.beneficiary !== null}
             >
               <InputLabel
                 ref={inputLabel}
@@ -122,12 +122,12 @@ const BeneficiaryEditForm = props => {
                   value={values.user_id}
                   labelWidth={labelWidth}
                 >
-                  {users.map(user => (
+                  {beneficiary.users.map(user => (
                     <MenuItem value={user.id}>{user.email}</MenuItem>
                   ))}
               </Select>
               <FormHelperText>
-                {errors.users && touched.users && errors.users}
+                {errors.beneficiary && touched.beneficiary && errors.beneficiary}
               </FormHelperText>
             </FormControl>
             <InputForm

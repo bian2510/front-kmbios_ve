@@ -104,6 +104,7 @@ function App() {
                 beneficiary={beneficiary}
                 session={session}
                 users={users}
+                setTransactions={setTransactions}
               />
             )}
           </Route>

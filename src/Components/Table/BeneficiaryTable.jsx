@@ -132,12 +132,14 @@ export default function BeneficiaryTable(props) {
                   >
                     <EditIcon color="primary" />
                   </Link>
+                  <Link>
                     <DeleteIcon
                       color="primary"
                       onClick={() => {
                         deleteRegister(beneficiary.id);
                       }}
                     />
+                  </Link>
                   <Link
                     to="crear_transaccion"
                     onClick={() => {
